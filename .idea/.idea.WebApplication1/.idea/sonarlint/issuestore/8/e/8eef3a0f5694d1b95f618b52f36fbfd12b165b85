@@ -1,0 +1,4 @@
+
+scsharpsquid:S3963	"JInitialize all 'static fields' inline and remove the 'static constructor'.(‹âÉÏıÿÿÿÿ8Ê¡¼÷Š2
+Œcsharpsquid:S3887"cUse an immutable collection or reduce the accessibility of the non-private readonly field 'Livros'.(œÇ²Áøÿÿÿÿ8õÃÈ÷Š2
+…csharpsquid:S2386"\Use an immutable collection or reduce the accessibility of the public static field 'Livros'.(œÇ²Áøÿÿÿÿ8Ê¡¼÷Š2

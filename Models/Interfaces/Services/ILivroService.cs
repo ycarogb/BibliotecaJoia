@@ -1,6 +1,6 @@
-using WebApplication1.Models.Dtos;
+using WebApp.Models.Dtos;
 
-namespace WebApplication1.Models.Services;
+namespace WebApp.Models.Interfaces.Services;
 
 public interface ILivroService
 {

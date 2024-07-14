@@ -1,18 +1,11 @@
-@model TModel
-
 @{
-    Layout = null;
+    ViewData["Title"] = "Início";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
-<div>
-      
+<div class="text-center">
+    <h1 class="display-4">Livros</h1>
 </div>
-</body>
-</html>
+
+<div class="text-lg-start">
+    <a class="nav-link text-dark" asp-area="" asp-controller="Livro" asp-action="List">Listar Livros</a>
+</div>

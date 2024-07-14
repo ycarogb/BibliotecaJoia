@@ -1,15 +1,21 @@
-namespace WebApplication1.Models.Dtos;
+namespace WebApp.Models.Dtos;
 
-public class ProdutoDto
+public class LivroDto
 {
-    public string Id { get; set; }
-    public string Descricao { get; set; }
-    public string Valor { get; set; }
+    public string Id { get; set; } 
+    public string Nome { get; set; }
+    public string Autor { get; set; }
+    public string Editora { get; set; }
 
-    public ProdutoDto(string id, string descricao, string valor)
+    public LivroDto(string id, string nome, string autor, string editora) : this(nome, autor, editora)
     {
         Id = id;
-        Descricao = descricao;
-        Valor = valor;
+    }
+
+    public LivroDto(string nome, string autor, string editora)
+    {
+        Nome = nome;
+        Autor = autor;
+        Editora = editora;
     }
 }
