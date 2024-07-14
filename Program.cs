@@ -1,7 +1,15 @@
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using WebApp.Models.Interfaces.Repositories;
+using WebApp.Models.Interfaces.Services;
+using WebApp.Models.Repositories;
+using WebApp.Models.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.TryAddScoped<ILivroRepository, LivroRepository>();
+builder.Services.TryAddScoped<ILivroService, LivroService>();
 
 var app = builder.Build();
 
