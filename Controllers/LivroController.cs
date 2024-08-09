@@ -29,4 +29,19 @@ public class LivroController : Controller
             throw e;
         }
     }
+
+    public IActionResult Edit()
+    {
+        throw new NotImplementedException();
+    }
+
+    public IActionResult Details()
+    {
+        throw new NotImplementedException();
+    }
+
+    public IActionResult Delete()
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -1,7 +1,7 @@
 @model System.Collections.Generic.List<WebApp.Models.Dtos.LivroDto>
 
 @{
-    Layout = "_Layout";
+    ViewData["Title"] = "List";
 }
 
 <!DOCTYPE html>
@@ -12,7 +12,46 @@
 </head>
 <body>
 <div>
-      
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Autor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Editora)
+            </th>
+            <th></th>
+        </tr>
+@foreach (var item in Model){
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Autor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Editora)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */}) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */}) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */})
+        </td>
+    </tr>
+}
+        </thead>
+    </table>
 </div>
 </body>
 </html>
