@@ -7,7 +7,7 @@ using WebApp.Models.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.TryAddScoped<ILivroRepository, LivroRepository>();
 builder.Services.TryAddScoped<ILivroService, LivroService>();
 
@@ -32,4 +32,4 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+await app.RunAsync();
