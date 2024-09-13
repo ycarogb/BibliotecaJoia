@@ -1,0 +1,39 @@
+@model WebApp.Models.Dtos.LivroDto
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "_Layout";
+}
+
+<h2>Detalhes do livro</h2>
+<div>
+    <table class="table">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Nome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Autor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Autor)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Editora)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Editora)
+        </dd>
+    </table>
+</div>
+<div>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) | <a asp-action="List">Voltar</a>
+</div>
