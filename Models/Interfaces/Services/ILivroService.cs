@@ -6,6 +6,6 @@ public interface ILivroService
 {
     void Cadastrar(LivroDto livro);
     List<LivroDto> Listar();
-    LivroDto ObterPorId(string Id);
+    LivroDto ObterPorId(string id);
     void EditarLivro(LivroDto livro);
 }

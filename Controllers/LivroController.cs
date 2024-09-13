@@ -44,7 +44,7 @@ public class LivroController : Controller
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit([Bind("Nome, Autor, Editora")] LivroDto livro)
+    public IActionResult Edit([Bind("Nome, Autor, Editora, Id")] LivroDto livro)
     {
         if (livro.Id == null)
             return NotFound();
@@ -59,9 +59,15 @@ public class LivroController : Controller
         }
     }
 
-    public IActionResult Details()
+    public IActionResult Details(string? id)
     {
-        throw new NotImplementedException();
+        if (id == null)
+            return NotFound();
+        var livro = _livroService.ObterPorId(id);
+        if (livro == null)
+            return NotFound();
+
+        return View(livro);
     }
 
     public IActionResult Delete()
