@@ -36,4 +36,10 @@ public class LivroRepository : ILivroRepository
         
         Cadastrar(livroBanco);
     }
+
+    public void Excluir(string id)
+    {
+        var livroBanco = ObterPorId(id);
+        ContextDataFake.Livros.Remove(livroBanco);
+    }
 }

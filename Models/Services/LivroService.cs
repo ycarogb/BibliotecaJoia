@@ -60,4 +60,16 @@ public class LivroService : ILivroService
             throw e;
         }
     }
+
+    public void Excluir(string id)
+    {
+        try
+        {
+            _livroRepository.Excluir(id);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+    }
 }

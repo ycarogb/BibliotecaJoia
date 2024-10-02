@@ -1,0 +1,43 @@
+@model WebApp.Models.Dtos.LivroDto
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "_Layout";
+}
+
+<h1>Exclusão</h1>
+
+<h3>Tem certeza que deseja excluir este livro?</h3>
+
+<div>
+    <table class="table">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Nome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Autor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Autor)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Editora)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Editora)
+        </dd>
+    </table>
+    <form asp-action="Delete">
+        <input type="submit" value="Excluir" class="btn btn-danger"/> | 
+        <a asp-action="List">Voltar</a>
+    </form>
+</div>
