@@ -70,9 +70,16 @@ public class LivroController : Controller
         return View(livro);
     }
 
-    public IActionResult Delete()
+    public IActionResult Delete(string? id)
     {
-        throw new NotImplementedException();
+        if (id == null)
+            return NotFound();
+
+        var livro = _livroService.ObterPorId(id);
+        if (livro == null)
+            return NotFound();
+        
+        return View(livro);
     }
 
     public IActionResult Create()
@@ -95,6 +102,20 @@ public class LivroController : Controller
         try
         {
             _livroService.Cadastrar(livro);
+            return RedirectToAction("List");
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+    }
+
+    [HttpPost]
+    public IActionResult Delete([Bind("Id, Nome, Autor, Editora")] LivroDto livro)
+    {
+        try
+        {
+            _livroService.Excluir(livro.Id);
             return RedirectToAction("List");
         }
         catch (Exception e)

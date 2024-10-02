@@ -8,4 +8,5 @@ public interface ILivroRepository
     List<LivroDto> Listar();
     LivroDto ObterPorId(string id);
     void Atualizar(LivroDto livro);
+    void Excluir(string id);
 }

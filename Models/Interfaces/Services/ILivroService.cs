@@ -8,4 +8,5 @@ public interface ILivroService
     List<LivroDto> Listar();
     LivroDto ObterPorId(string id);
     void EditarLivro(LivroDto livro);
+    void Excluir(string id);
 }
