@@ -5,41 +5,34 @@ namespace WebApp.Models.Repositories;
 
 public class LivroRepository : ILivroRepository
 {
+    private readonly IContextData _context;
+    public LivroRepository(IContextData context)
+    {
+        _context = context;
+    }
     public void Cadastrar(LivroDto livro)
     {
         //TODO: VALIDAR DADOS DO INPUT
-        ContextDataFake.Livros.Add(livro);
+        _context.Cadastrar(livro);
     }
 
     public List<LivroDto> Listar()
     {
-        var livros = ContextDataFake.Livros;
-        return livros
-            .OrderBy(p => p.Nome)
-            .ToList();
+        return _context.Listar();
     }
 
     public LivroDto ObterPorId(string id)
     {
-        var livros = ContextDataFake.Livros;
-        return livros.First(p => p.Id == id);
+        return _context.ObterPorId(id);
     }
 
     public void Atualizar(LivroDto livro)
     {
-        var livroBanco = ObterPorId(livro.Id);
-        ContextDataFake.Livros.Remove(livroBanco);
-
-        livroBanco.Nome = livro.Nome;
-        livroBanco.Editora = livro.Editora;
-        livroBanco.Autor = livro.Autor;
-        
-        Cadastrar(livroBanco);
+        _context.Atualizar(livro);
     }
 
     public void Excluir(string id)
     {
-        var livroBanco = ObterPorId(id);
-        ContextDataFake.Livros.Remove(livroBanco);
+        _context.Excluir(id);
     }
 }

@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.TryAddScoped<ILivroRepository, LivroRepository>();
 builder.Services.TryAddScoped<ILivroService, LivroService>();
+builder.Services.TryAddScoped<IContextData, ContextDataFake>();
 
 var app = builder.Build();
 
