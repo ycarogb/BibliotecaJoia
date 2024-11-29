@@ -12,8 +12,10 @@ public class ContextDataFake : IContextData
         InitializeData();
     }
 
-    private void InitializeData()
+    private static void InitializeData()
     {
+        if (_livros.Any()) return;
+        
         var livro = new LivroDto("Implementanto Domain-Driven Design", "Vaigh Vernon", "Alta Books");
         _livros.Add(livro);
         
@@ -75,7 +77,7 @@ public class ContextDataFake : IContextData
         try
         {
             var livroEditado = ObterPorId(livro.Id);
-            _livros.Remove(livro);
+            _livros.Remove(livroEditado);
 
             livroEditado.Nome = livro.Nome;
             livroEditado.Autor = livro.Autor;
