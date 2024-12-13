@@ -11,6 +11,7 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.TryAddScoped<ILivroRepository, LivroRepository>();
 builder.Services.TryAddScoped<ILivroService, LivroService>();
 builder.Services.TryAddScoped<IContextData, ContextDataFake>();
+builder.Services.TryAddScoped<IConnectionManager, ConnectionManager>();
 
 var app = builder.Build();
 
