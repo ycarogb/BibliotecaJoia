@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using WebApp.Models.Context;
 using WebApp.Models.Interfaces.Repositories;
 using WebApp.Models.Interfaces.Services;
 using WebApp.Models.Repositories;
@@ -10,8 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.TryAddScoped<ILivroRepository, LivroRepository>();
 builder.Services.TryAddScoped<ILivroService, LivroService>();
-builder.Services.TryAddScoped<IContextData, ContextDataFake>();
-builder.Services.TryAddScoped<IConnectionManager, ConnectionManager>();
+ConfigureDataSource(builder.Services);
 
 var app = builder.Build();
 
@@ -35,3 +35,20 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 await app.RunAsync();
+return;
+
+void ConfigureDataSource(IServiceCollection services)
+{
+    var dataSource = builder.Configuration["DataSource"];
+
+    switch (dataSource)
+    {
+        case "Local":
+            services.TryAddScoped<IContextData, ContextDataFake>();
+            break;
+        case "SqlServer":
+            services.TryAddScoped<IContextData, ContextDataSqlServer>();
+            builder.Services.TryAddScoped<IConnectionManager, ConnectionManager>();
+            break;
+    }
+}

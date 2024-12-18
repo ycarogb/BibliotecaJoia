@@ -1,7 +1,7 @@
 using WebApp.Models.Dtos;
 using WebApp.Models.Interfaces.Repositories;
 
-namespace WebApp.Models.Repositories;
+namespace WebApp.Models.Context;
 
 public class ContextDataFake : IContextData
 {

@@ -1,6 +1,6 @@
 using WebApp.Models.Enums;
 
-namespace WebApp.Models.Interfaces.Repositories;
+namespace WebApp.Models.Repositories;
 
 public class SqlManager
 {
@@ -8,10 +8,11 @@ public class SqlManager
     {
         var sql = operacaoSql switch
         {
-            TSql.LISTAR_LIVRO => "select id, nome, autor, editora from Livros order by nome",
+            TSql.LISTAR_LIVROS => "select id, nome, autor, editora from Livros order by nome",
             TSql.CADASTRAR_LIVRO => "insert into Livros (id, nome, autor, editora) values (@id, @nome, @autor, @editora)",
             TSql.PESQUISAR_LIVRO => "select id, nome, autor, editora from Livros where id = @id",
             TSql.EXCLUIR_LIVRO => "delete from Livros where id = @id",
+            TSql.ATUALIZAR_LIVRO => "update Livros set nome = @nome, autor = @autor, editora = @editora where id = @id",
             _ => throw new ArgumentOutOfRangeException(nameof(operacaoSql), operacaoSql, null)
         };
 
