@@ -1,4 +1,5 @@
 using WebApp.Models.Entidades;
+using WebApp.Models.Enums;
 
 namespace WebApp.Models.Dtos;
 
@@ -7,6 +8,7 @@ public class LivroDto : EntidadeBase
     public string Nome { get; set; }
     public string Autor { get; set; }
     public string Editora { get; set; }
+    public int StatusLivroId { get; set; }
 
     //Construtor criado para evitar conflitos na construção do formulário
     public LivroDto()
@@ -23,5 +25,6 @@ public class LivroDto : EntidadeBase
         Nome = nome;
         Autor = autor;
         Editora = editora;
+        StatusLivroId = 1;
     }
 }
