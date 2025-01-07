@@ -29,7 +29,7 @@ public class ContextDataSqlServer : IContextData
             command.Parameters.Add("@nome", SqlDbType.VarChar).Value = livro.Nome;
             command.Parameters.Add("@autor", SqlDbType.VarChar).Value = livro.Autor;
             command.Parameters.Add("@editora", SqlDbType.VarChar).Value = livro.Editora;
-            command.Parameters.Add("@statusLivroId", SqlDbType.Int).Value = livro.StatusLivroId;
+            command.Parameters.Add("@idStatusLivro", SqlDbType.Int).Value = livro.IdStatusLivro;
             command.ExecuteNonQuery();
         }
         catch (Exception e)
