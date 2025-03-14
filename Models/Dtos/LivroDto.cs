@@ -3,8 +3,9 @@ using WebApp.Models.Enums;
 
 namespace WebApp.Models.Dtos;
 
-public class LivroDto : EntidadeBase
+public class LivroDto
 {
+    public string Id { get; set; }
     public string Nome { get; set; }
     public string Autor { get; set; }
     public string Editora { get; set; }
@@ -15,15 +16,16 @@ public class LivroDto : EntidadeBase
     {
         
     }
-    public LivroDto(string id, string nome, string autor, string editora) : this(nome, autor, editora)
-    {
-        Id = id;
-    }
 
-    public LivroDto(string nome, string autor, string editora)
+    public Livro ConverterParaEntidade()
     {
-        Nome = nome;
-        Autor = autor;
-        Editora = editora;
+        return new Livro()
+        {
+            Id = Id,
+            Nome = Nome,
+            Autor = Autor,
+            Editora = Editora,
+            Status = (StatusLivro)IdStatusLivro
+        };
     }
 }

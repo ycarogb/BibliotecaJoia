@@ -1,11 +1,12 @@
 using WebApp.Models.Dtos;
+using WebApp.Models.Entidades;
 using WebApp.Models.Interfaces.Repositories;
 
 namespace WebApp.Models.Context;
 
 public class ContextDataFake : IContextData
 {
-    private static List<LivroDto> _livros = new List<LivroDto>();
+    private static List<Livro> _livros = new List<Livro>();
 
     public ContextDataFake()
     {
@@ -15,24 +16,39 @@ public class ContextDataFake : IContextData
     private static void InitializeData()
     {
         if (_livros.Any()) return;
-        
-        var livro = new LivroDto("Implementanto Domain-Driven Design", "Vaigh Vernon", "Alta Books");
+
+        var livro = new Livro
+        {
+            Nome = "Implementanto Domain-Driven Design", Autor = "Vaigh Vernon", Editora = "Alta Books"
+        };
         _livros.Add(livro);
-        
-        livro = new LivroDto("Refatoração", "Eric Evans", "Alta Books");
+
+        livro = new Livro
+        {
+            Nome = "Refatoração", Autor = "Eric Evans", Editora = "Alta Books"
+        };
         _livros.Add(livro);
-        
-        livro = new LivroDto("Redes Guia Prático", "Carlos Marimoto", "Sul Editores");
+
+        livro = new Livro
+        {
+            Nome = "Redes Guia Prático", Autor = "Carlos Marimoto", Editora = "Sul Editores"
+        };
         _livros.Add(livro);
-        
-        livro = new LivroDto("PHP Programando com Orientação a Objetos", "Pablo Dall'Oglio", "Novatec");
+
+        livro = new Livro
+        {
+            Nome = "PHP Programando com Orientação a Objetos", Autor = "Pablo Dall'Oglio", Editora = "Novatec"
+        };
         _livros.Add(livro);
-        
-        livro = new LivroDto("Introdução a Programação com Python", "Nilo C. Menezes", "Novatec");
+
+        livro = new Livro
+        {
+            Nome = "Introdução a Programação com Python", Autor = "Nilo C. Menezes", Editora = "Novatec"
+        };
         _livros.Add(livro);
     }
 
-    public void Cadastrar(LivroDto livro)
+    public void Cadastrar(Livro livro)
     {
         try
         {
@@ -45,7 +61,7 @@ public class ContextDataFake : IContextData
         }
     }
 
-    public List<LivroDto> Listar()
+    public List<Livro> Listar()
     {
         try
         {
@@ -58,7 +74,7 @@ public class ContextDataFake : IContextData
         }
     }
 
-    public LivroDto ObterPorId(string id)
+    public Livro ObterPorId(string id)
     {
         try
         {
@@ -72,7 +88,7 @@ public class ContextDataFake : IContextData
     }
 
     //TODO: Resolver Atualização que fica repetindo os itens ao final
-    public void Atualizar(LivroDto livro)
+    public void Atualizar(Livro livro)
     {
         try
         {
