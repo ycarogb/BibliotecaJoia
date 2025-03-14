@@ -1,6 +1,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using WebApp.Models.Dtos;
+using WebApp.Models.Entidades;
 using WebApp.Models.Enums;
 using WebApp.Models.Interfaces.Repositories;
 using WebApp.Models.Repositories;
@@ -16,7 +17,7 @@ public class ContextDataSqlServer : IContextData
     {
         _connection = connectionManager.GetConnection();
     }
-    public void Cadastrar(LivroDto livro)
+    public void Cadastrar(Livro livro)
     {
         try
         {
@@ -29,7 +30,7 @@ public class ContextDataSqlServer : IContextData
             command.Parameters.Add("@nome", SqlDbType.VarChar).Value = livro.Nome;
             command.Parameters.Add("@autor", SqlDbType.VarChar).Value = livro.Autor;
             command.Parameters.Add("@editora", SqlDbType.VarChar).Value = livro.Editora;
-            command.Parameters.Add("@idStatusLivro", SqlDbType.Int).Value = livro.IdStatusLivro;
+            command.Parameters.Add("@idStatusLivro", SqlDbType.Int).Value = (int)livro.Status;
             command.ExecuteNonQuery();
         }
         catch (Exception e)
@@ -44,9 +45,9 @@ public class ContextDataSqlServer : IContextData
         }
     }
 
-    public List<LivroDto> Listar()
+    public List<Livro> Listar()
     {
-        var livros = new List<LivroDto>();
+        var livros = new List<Livro>();
         try
         {
             var query = SqlManager.GetSql(TSql.LISTAR_LIVROS); 
@@ -66,7 +67,7 @@ public class ContextDataSqlServer : IContextData
                 var autor = colunas[2].ToString();
                 var editora = colunas[3].ToString();
 
-                var livro = new LivroDto(id, nome, autor, editora);
+                var livro = new Livro { Id = id, Nome = nome, Autor = autor, Editora = editora };
                 livros.Add(livro);
             }
 
@@ -88,9 +89,9 @@ public class ContextDataSqlServer : IContextData
         }
     }
 
-    public LivroDto ObterPorId(string id)
+    public Livro ObterPorId(string id)
     {
-        var livro = new LivroDto();
+        var livro = new Livro();
         try
         {
             var query = SqlManager.GetSql(TSql.PESQUISAR_LIVRO); 
@@ -111,7 +112,10 @@ public class ContextDataSqlServer : IContextData
                 var autor = colunas[2].ToString();
                 var editora = colunas[3].ToString();
 
-                livro = new LivroDto(codigo, nome, autor, editora);
+                livro = new Livro
+                {
+                    Id = codigo, Nome = nome, Autor = autor, Editora = editora
+                };
             }
 
             adapter = null;
@@ -131,7 +135,7 @@ public class ContextDataSqlServer : IContextData
         }
     }
 
-    public void Atualizar(LivroDto livro)
+    public void Atualizar(Livro livro)
     {
         try
         {
