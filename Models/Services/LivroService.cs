@@ -1,4 +1,5 @@
 using WebApp.Models.Dtos;
+using WebApp.Models.Entidades;
 using WebApp.Models.Interfaces.Repositories;
 using WebApp.Models.Interfaces.Services;
 
@@ -17,7 +18,9 @@ public class LivroService : ILivroService
     {
         try
         {
-            _livroRepository.Cadastrar(livro);
+            var objetoLivro = livro.ConverterParaEntidade();
+            objetoLivro.Cadastrar();
+            _livroRepository.Cadastrar(objetoLivro);
         }
         catch (Exception e)
         {
@@ -29,7 +32,15 @@ public class LivroService : ILivroService
     {
         try
         {
-            return _livroRepository.Listar();
+            var objetoslivros = _livroRepository.Listar();
+            var livros = new List<LivroDto>();
+            foreach (var livro in objetoslivros)
+            {
+                var novoLivro = livro.ConverterParaDto();
+                livros.Add(novoLivro);
+            }
+
+            return livros;
         }
         catch (Exception e)
         {
@@ -41,7 +52,9 @@ public class LivroService : ILivroService
     {
         try
         {
-            return _livroRepository.ObterPorId(Id);
+            var objetoLivro =  _livroRepository.ObterPorId(Id);
+            var livroDto = objetoLivro.ConverterParaDto();
+            return livroDto;
         }
         catch (Exception e)
         {
@@ -53,7 +66,8 @@ public class LivroService : ILivroService
     {
         try
         {
-            _livroRepository.Atualizar(livro);
+            var objetoLivro = livro.ConverterParaEntidade();
+            _livroRepository.Atualizar(objetoLivro);
         }
         catch (Exception e)
         {

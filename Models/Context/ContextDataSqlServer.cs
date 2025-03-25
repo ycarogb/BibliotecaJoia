@@ -1,11 +1,9 @@
 using System.Data;
 using System.Data.SqlClient;
-using WebApp.Models.Dtos;
 using WebApp.Models.Entidades;
 using WebApp.Models.Enums;
 using WebApp.Models.Interfaces.Repositories;
 using WebApp.Models.Repositories;
-using WebApp.Models.Services;
 
 namespace WebApp.Models.Context;
 

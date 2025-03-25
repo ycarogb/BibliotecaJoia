@@ -3,9 +3,8 @@ using WebApp.Models.Enums;
 
 namespace WebApp.Models.Dtos;
 
-public class LivroDto
+public class LivroDto : EntidadeBase
 {
-    public string Id { get; set; }
     public string Nome { get; set; }
     public string Autor { get; set; }
     public string Editora { get; set; }

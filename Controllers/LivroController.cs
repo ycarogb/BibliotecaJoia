@@ -101,7 +101,6 @@ public class LivroController : Controller
     {
         try
         {
-            livro.IdStatusLivro = 1; //TODO Resolve o problema de criação de livro sem setar status - isso será alterado no futuro!!
             _livroService.Cadastrar(livro);
             return RedirectToAction("List");
         }
