@@ -1,4 +1,4 @@
-using WebApp.Models.Dtos;
+using WebApp.Models.Entidades;
 using WebApp.Models.Interfaces.Repositories;
 
 namespace WebApp.Models.Repositories;
@@ -10,23 +10,23 @@ public class LivroRepository : ILivroRepository
     {
         _context = context;
     }
-    public void Cadastrar(LivroDto livro)
+    public void Cadastrar(Livro livro)
     {
         //TODO: VALIDAR DADOS DO INPUT
         _context.Cadastrar(livro);
     }
 
-    public List<LivroDto> Listar()
+    public List<Livro> Listar()
     {
         return _context.Listar();
     }
 
-    public LivroDto ObterPorId(string id)
+    public Livro ObterPorId(string id)
     {
         return _context.ObterPorId(id);
     }
 
-    public void Atualizar(LivroDto livro)
+    public void Atualizar(Livro livro)
     {
         _context.Atualizar(livro);
     }
