@@ -13,26 +13,26 @@ public class LivroRepository : ILivroRepository
     public void Cadastrar(Livro livro)
     {
         //TODO: VALIDAR DADOS DO INPUT
-        _context.Cadastrar(livro);
+        _context.CadastrarLivro(livro);
     }
 
     public List<Livro> Listar()
     {
-        return _context.Listar();
+        return _context.ListarLivro();
     }
 
     public Livro ObterPorId(string id)
     {
-        return _context.ObterPorId(id);
+        return _context.ObterLivroPorId(id);
     }
 
     public void Atualizar(Livro livro)
     {
-        _context.Atualizar(livro);
+        _context.AtualizarLivro(livro);
     }
 
     public void Excluir(string id)
     {
-        _context.Excluir(id);
+        _context.ExcluirLivro(id);
     }
 }

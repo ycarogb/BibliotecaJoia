@@ -48,7 +48,7 @@ public class ContextDataFake : IContextData
         _livros.Add(livro);
     }
 
-    public void Cadastrar(Livro livro)
+    public void CadastrarLivro(Livro livro)
     {
         try
         {
@@ -61,7 +61,7 @@ public class ContextDataFake : IContextData
         }
     }
 
-    public List<Livro> Listar()
+    public List<Livro> ListarLivro()
     {
         try
         {
@@ -74,7 +74,7 @@ public class ContextDataFake : IContextData
         }
     }
 
-    public Livro ObterPorId(string id)
+    public Livro ObterLivroPorId(string id)
     {
         try
         {
@@ -88,18 +88,18 @@ public class ContextDataFake : IContextData
     }
 
     //TODO: Resolver Atualização que fica repetindo os itens ao final
-    public void Atualizar(Livro livro)
+    public void AtualizarLivro(Livro livro)
     {
         try
         {
-            var livroEditado = ObterPorId(livro.Id);
+            var livroEditado = ObterLivroPorId(livro.Id);
             _livros.Remove(livroEditado);
 
             livroEditado.Nome = livro.Nome;
             livroEditado.Autor = livro.Autor;
             livroEditado.Editora = livro.Editora;
             
-            Cadastrar(livroEditado);
+            CadastrarLivro(livroEditado);
         }
         catch (Exception e)
         {
@@ -108,11 +108,11 @@ public class ContextDataFake : IContextData
         }
     }
 
-    public void Excluir(string id)
+    public void ExcluirLivro(string id)
     {
         try
         {
-            var livro = ObterPorId(id);
+            var livro = ObterLivroPorId(id);
             _livros.Remove(livro);
         }
         catch (Exception e)
@@ -120,5 +120,30 @@ public class ContextDataFake : IContextData
             Console.WriteLine(e);
             throw;
         }
+    }
+
+    public void CadastrarCliente(Cliente Cliente)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Cliente> ListarCliente()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Cliente ObterClientePorId(string id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AtualizarCliente(Cliente Cliente)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ExcluirCliente(string id)
+    {
+        throw new NotImplementedException();
     }
 }
