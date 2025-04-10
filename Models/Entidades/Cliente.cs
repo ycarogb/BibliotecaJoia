@@ -25,4 +25,9 @@ public class Cliente : EntidadeBase
             IdStatusCliente = (int)Status
         };
     }
+
+    public void Cadastrar()
+    {
+        Status = StatusCliente.Ativo;
+    }
 }

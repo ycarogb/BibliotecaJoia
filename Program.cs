@@ -9,9 +9,23 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
-builder.Services.TryAddScoped<ILivroRepository, LivroRepository>();
-builder.Services.TryAddScoped<ILivroService, LivroService>();
+
+AdicionarDependenciasRepositories(builder.Services);
+AdicionarDependenciasServices(builder.Services);
+
 ConfigureDataSource(builder.Services);
+
+void AdicionarDependenciasRepositories(IServiceCollection services)
+{
+    services.TryAddScoped<ILivroRepository, LivroRepository>();
+    services.TryAddScoped<IClienteRepository, ClienteRepository>();
+}
+
+void AdicionarDependenciasServices(IServiceCollection services)
+{
+    services.TryAddScoped<ILivroService, LivroService>();
+    services.TryAddScoped<IClienteService, ClienteService>();
+}
 
 var app = builder.Build();
 
