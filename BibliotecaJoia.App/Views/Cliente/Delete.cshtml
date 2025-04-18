@@ -1,0 +1,54 @@
+@model WebApp.Models.Dtos.ClienteDto
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Excluir cliente</h1>
+
+<h3>Tem certeza que deseja excluir este cliente?</h3>
+
+<div>
+    <table class="table">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Nome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Cpf)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Cpf)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Telefone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Status)
+        </dd>
+    </table>
+    <form asp-action="Delete">
+        <input type="submit" value="Excluir" class="btn btn-danger"/> |
+        <a asp-action="List">Voltar</a>
+    </form>
+</div>
