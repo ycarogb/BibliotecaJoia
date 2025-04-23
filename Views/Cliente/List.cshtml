@@ -12,7 +12,7 @@
 </head>
 <body>
 <p>
-    <a asp-action="Create">Adicionar livros</a>
+    <a asp-action="Create">Adicionar cliente</a>
 </p>
 <div>
     <table class="table">
@@ -38,19 +38,19 @@
         @foreach (var item in Model){
         <tr>
             <td>
-                @Html.DisplayNameFor(model => model.First().Nome)
+                @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td>
-                @Html.DisplayNameFor(model => model.First().Cpf)
+                @Html.DisplayFor(modelItem => item.Cpf)
             </td>
             <td>
-                @Html.DisplayNameFor(model => model.First().Email)
+                @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayNameFor(model => model.First().Telefone)
+                @Html.DisplayFor(modelItem => item.Telefone)
             </td>
             <td>
-                @Html.DisplayNameFor(model => model.First().Status)
+                @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
                 @Html.ActionLink("Atualizar", "Edit", new {  id=item.Id }) |

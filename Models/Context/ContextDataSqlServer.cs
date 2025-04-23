@@ -195,6 +195,7 @@ public class ContextDataSqlServer : IContextData
 
             command.Parameters.Add("@id", SqlDbType.VarChar).Value = cliente.Id; //seta valor para o parâmetro "@id" no comando SQL
             command.Parameters.Add("@nome", SqlDbType.VarChar).Value = cliente.Nome;
+            command.Parameters.Add("@cpf", SqlDbType.VarChar).Value = cliente.Cpf;
             command.Parameters.Add("@email", SqlDbType.VarChar).Value = cliente.Email;
             command.Parameters.Add("@telefone", SqlDbType.VarChar).Value = cliente.Telefone;
             command.Parameters.Add("@idStatusCliente", SqlDbType.Int).Value = cliente.IdStatusCliente;
@@ -231,12 +232,12 @@ public class ContextDataSqlServer : IContextData
 
                 var id = colunas[0].ToString();
                 var nome = colunas[1].ToString();
-                var telefone = colunas[2].ToString();
-                var cpf = colunas[3].ToString();
-                var email = colunas[4].ToString();
-                var idStatusCliente = colunas[5].ToString();
+                var cpf = colunas[2].ToString();
+                var email = colunas[3].ToString();
+                var telefone = colunas[4].ToString();
+                var idStatusCliente = (int)colunas[5];
 
-                var cliente = new Cliente() { Id = id, Nome = nome, Telefone = telefone, Cpf = cpf, Email = email, IdStatusCliente = int.Parse(idStatusCliente)};
+                var cliente = new Cliente() { Id = id, Nome = nome, Telefone = telefone, Cpf = cpf, Email = email, IdStatusCliente = idStatusCliente, Status = (StatusCliente)idStatusCliente};
                 clientes.Add(cliente);
             }
 
@@ -278,12 +279,12 @@ public class ContextDataSqlServer : IContextData
 
                 var codigo = colunas[0].ToString();
                 var nome = colunas[1].ToString();
-                var telefone = colunas[2].ToString();
-                var cpf = colunas[3].ToString();
-                var email = colunas[4].ToString();
-                var idStatusCliente = colunas[5].ToString();
+                var cpf = colunas[2].ToString();
+                var email = colunas[3].ToString();
+                var telefone = colunas[4].ToString();
+                var idStatusCliente = (int)colunas[5];
 
-                cliente = new Cliente() { Id = codigo, Nome = nome, Telefone = telefone, Cpf = cpf, Email = email, IdStatusCliente = int.Parse(idStatusCliente)};
+                cliente = new Cliente { Id = codigo, Nome = nome, Telefone = telefone, Cpf = cpf, Email = email, IdStatusCliente = idStatusCliente, Status = (StatusCliente)idStatusCliente };
             }
 
             adapter = null;
