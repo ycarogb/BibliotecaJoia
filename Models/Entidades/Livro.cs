@@ -24,6 +24,7 @@ public class Livro : EntidadeBase
     {
         return new LivroDto()
         {
+            Id = Id,
             Autor = Autor,
             Editora = Editora,
             Nome = Nome,

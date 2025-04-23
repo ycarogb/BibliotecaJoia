@@ -46,7 +46,7 @@ public class ClienteController : Controller
     //Ao clicar em Editar, faz a rotina para atualizar dados de cliente
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit([Bind("Nome, Cpf, Email, Telefone, Status")] ClienteDto cliente)
+    public IActionResult Edit([Bind("Id, Nome, Cpf, Email, Telefone, Status")] ClienteDto cliente)
     {
         if (cliente.Id == null)
             return NotFound();
@@ -113,7 +113,7 @@ public class ClienteController : Controller
     }
 
     [HttpPost]
-    public IActionResult Delete([Bind("Nome, Cpf, Email, Telefone, Status")] ClienteDto cliente)
+    public IActionResult Delete([Bind("Id, Nome, Cpf, Email, Telefone, Status")] ClienteDto cliente)
     {
         try
         {

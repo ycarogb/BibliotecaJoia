@@ -12,15 +12,12 @@
 </head>
 <body>
 <p>
-    <a asp-action="Create">Adicionar livros</a>
+    <a asp-action="Create">Adicionar livro</a>
 </p>
 <div>
     <table class="table">
         <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Id)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.First().Nome)
             </th>
@@ -34,9 +31,6 @@
         </tr>
 @foreach (var item in Model){
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Nome)
         </td>
