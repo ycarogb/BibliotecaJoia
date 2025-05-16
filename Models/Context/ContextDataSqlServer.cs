@@ -355,4 +355,168 @@ public class ContextDataSqlServer : IContextData
                 _connection.Close(); //fecha conexão com o banco de dados
         }
     }
+
+    public void CadastrarUsuario(Usuario usuario)
+    {
+        try
+        {
+            _connection!.Open(); //abre conexão com o banco de dados
+
+            var query = SqlManager.GetSql(TSql.CADASTRAR_USUARIO); 
+            var command = new SqlCommand(query, _connection); //cria um comando SQL a partir da query e da conexão
+
+            command.Parameters.Add("@id", SqlDbType.VarChar).Value = usuario.Id; //seta valor para o parâmetro "@id" no comando SQL
+            command.Parameters.Add("@login", SqlDbType.VarChar).Value = usuario.Login;
+            command.Parameters.Add("@senha", SqlDbType.VarChar).Value = usuario.Senha;
+            command.ExecuteNonQuery();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        finally
+        {
+            if(_connection is { State: ConnectionState.Connecting })
+                _connection.Close(); //fecha conexão com o banco de dados
+        }
+    }
+
+    public List<Usuario> ListarUsuarios()
+    {
+        var usuarios = new List<Usuario>();
+        try
+        {
+            var query = SqlManager.GetSql(TSql.LISTAR_USUARIOS); 
+            var command = new SqlCommand(query, _connection); //cria um comando SQL a partir da query e da conexão
+            var dataset = new DataSet(); //funciona como banco em memória
+            var adapter = new SqlDataAdapter(command); //consegue executar comandos para poder capturar os dados
+            adapter.Fill(dataset);
+
+            var rows = dataset.Tables[0].Rows; //necessário abrir dataset para acessar linhas e colunas da tabela
+
+            foreach (DataRow item in rows)
+            {
+                var colunas = item.ItemArray;
+
+                var id = (int)colunas[0];
+                var login = colunas[1].ToString();
+                var senha = colunas[2].ToString();
+
+                var usuario = new Usuario { Id = id, Login = login, Senha = senha};
+                usuarios.Add(usuario);
+            }
+
+            adapter = null;
+            dataset = null;
+
+            return usuarios;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        finally
+        {
+            if(_connection is { State: ConnectionState.Connecting })
+                _connection.Close(); //fecha conexão com o banco de dados
+        }
+        
+        
+    }
+
+    public Usuario ObterUsuarioPorId(int id)
+    {
+        var usuario = new Usuario();
+        try
+        {
+            var query = SqlManager.GetSql(TSql.PESQUISAR_USUARIO); 
+            var command = new SqlCommand(query, _connection); //cria um comando SQL a partir da query e da conexão
+            command.Parameters.Add("@id", SqlDbType.VarChar).Value = id;
+            var dataset = new DataSet(); //funciona como banco em memória
+            var adapter = new SqlDataAdapter(command); //consegue executar comandos para poder capturar os dados
+            adapter.Fill(dataset);
+
+            var rows = dataset.Tables[0].Rows; //necessário abrir dataset para acessar linhas e colunas da tabela
+
+            foreach (DataRow item in rows)
+            {
+                var colunas = item.ItemArray;
+                var codigo = (int)colunas[0];
+                var login = colunas[1].ToString();
+                var senha = colunas[2].ToString();
+
+                usuario = new Usuario
+                {
+                    Id = codigo, Login = login, Senha = senha
+                };
+            }
+
+            adapter = null;
+            dataset = null;
+
+            return usuario;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        finally
+        {
+            if(_connection is { State: ConnectionState.Connecting })
+                _connection.Close(); //fecha conexão com o banco de dados
+        }
+    }
+    
+    public void AtualizarUsuario(Usuario usuario)
+    {
+        try
+        {
+            _connection!.Open(); //abre conexão com o banco de dados
+
+            var query = SqlManager.GetSql(TSql.ATUALIZAR_USUARIO); 
+            var command = new SqlCommand(query, _connection); //cria um comando SQL a partir da query e da conexão
+
+            command.Parameters.Add("@id", SqlDbType.VarChar).Value = usuario.Id; //seta valor para o parâmetro "@id" no comando SQL
+            command.Parameters.Add("@nome", SqlDbType.VarChar).Value = usuario.Login;
+            command.Parameters.Add("@autor", SqlDbType.VarChar).Value = usuario.Senha;
+            command.ExecuteNonQuery();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        finally
+        {
+            if(_connection is { State: ConnectionState.Connecting })
+                _connection.Close(); //fecha conexão com o banco de dados
+        }
+    }
+
+    public void ExcluirUsuario(int id)
+    {
+        try
+        {
+            _connection!.Open(); //abre conexão com o banco de dados
+
+            var query = SqlManager.GetSql(TSql.EXCLUIR_USUARIO); 
+            var command = new SqlCommand(query, _connection); //cria um comando SQL a partir da query e da conexão
+
+            command.Parameters.Add("@id", SqlDbType.VarChar).Value = id; //seta valor para o parâmetro "@id" no comando SQL
+            command.ExecuteNonQuery();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        finally
+        {
+            if(_connection is { State: ConnectionState.Connecting })
+                _connection.Close(); //fecha conexão com o banco de dados
+        }
+    }
 }

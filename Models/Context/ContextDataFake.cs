@@ -1,4 +1,3 @@
-using WebApp.Models.Dtos;
 using WebApp.Models.Entidades;
 using WebApp.Models.Interfaces.Repositories;
 
@@ -143,6 +142,31 @@ public class ContextDataFake : IContextData
     }
 
     public void ExcluirCliente(string id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void CadastrarUsuario(Usuario usuario)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Usuario> ListarUsuarios()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Usuario ObterUsuarioPorId(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AtualizarUsuario(Usuario usuario)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ExcluirUsuario(int id)
     {
         throw new NotImplementedException();
     }

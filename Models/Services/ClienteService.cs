@@ -38,7 +38,7 @@ public class ClienteService : IClienteService
 
     }
 
-    public void EditarCliente(ClienteDto clienteDto)
+    public void Editar(ClienteDto clienteDto)
     {
         var cliente = clienteDto.ConverterParaEntidade();
         _clienteRepository.Atualizar(cliente);
