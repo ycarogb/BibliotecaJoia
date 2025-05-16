@@ -1,0 +1,26 @@
+@model WebApp.Models.Dtos.UsuarioDto
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Detalhes do Usuário</h2>
+<div>
+    <table class="table">
+        <dt>
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Login)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Senha)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Senha)
+        </dd>
+    </table>
+</div>
+<div>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) | <a asp-action="List">Voltar</a>
+</div>

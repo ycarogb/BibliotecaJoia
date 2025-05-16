@@ -480,8 +480,8 @@ public class ContextDataSqlServer : IContextData
             var command = new SqlCommand(query, _connection); //cria um comando SQL a partir da query e da conexão
 
             command.Parameters.Add("@id", SqlDbType.VarChar).Value = usuario.Id; //seta valor para o parâmetro "@id" no comando SQL
-            command.Parameters.Add("@nome", SqlDbType.VarChar).Value = usuario.Login;
-            command.Parameters.Add("@autor", SqlDbType.VarChar).Value = usuario.Senha;
+            command.Parameters.Add("@login", SqlDbType.VarChar).Value = usuario.Login;
+            command.Parameters.Add("@senha", SqlDbType.VarChar).Value = usuario.Senha;
             command.ExecuteNonQuery();
         }
         catch (Exception e)

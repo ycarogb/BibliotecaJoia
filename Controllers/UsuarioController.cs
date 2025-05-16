@@ -31,7 +31,7 @@ public class UsuarioController: Controller
         }
     }
 
-    public IActionResult Edit(string? id)
+    public IActionResult Edit(int id)
     {
         if (id == null)
             return NotFound();
@@ -44,7 +44,7 @@ public class UsuarioController: Controller
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit([Bind("Nome, Autor, Editora, Id")] UsuarioDto usuario)
+    public IActionResult Edit([Bind("Id, Login, Senha")] UsuarioDto usuario)
     {
         if (usuario.Id == null)
             return NotFound();
@@ -59,7 +59,7 @@ public class UsuarioController: Controller
         }
     }
 
-    public IActionResult Details(string? id)
+    public IActionResult Details(int id)
     {
         if (id == null)
             return NotFound();
@@ -70,7 +70,7 @@ public class UsuarioController: Controller
         return View(usuario);
     }
 
-    public IActionResult Delete(string? id)
+    public IActionResult Delete(int id)
     {
         if (id == null)
             return NotFound();
@@ -97,7 +97,7 @@ public class UsuarioController: Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Create([Bind("Nome, Autor, Editora")]UsuarioDto usuario)
+    public IActionResult Create([Bind("Id, Login, Senha")]UsuarioDto usuario)
     {
         try
         {
@@ -111,7 +111,7 @@ public class UsuarioController: Controller
     }
 
     [HttpPost]
-    public IActionResult Delete([Bind("Id, Nome, Autor, Editora")] UsuarioDto usuario)
+    public IActionResult Delete([Bind("Id, Login, Senha")] UsuarioDto usuario)
     {
         try
         {
