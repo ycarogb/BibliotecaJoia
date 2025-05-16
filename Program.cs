@@ -19,12 +19,14 @@ void AdicionarDependenciasRepositories(IServiceCollection services)
 {
     services.TryAddScoped<ILivroRepository, LivroRepository>();
     services.TryAddScoped<IClienteRepository, ClienteRepository>();
+    services.TryAddScoped<IUsuarioRepository, UsuarioRepository>();
 }
 
 void AdicionarDependenciasServices(IServiceCollection services)
 {
     services.TryAddScoped<ILivroService, LivroService>();
     services.TryAddScoped<IClienteService, ClienteService>();
+    services.TryAddScoped<IUsuarioService, UsuarioService>();
 }
 
 var app = builder.Build();

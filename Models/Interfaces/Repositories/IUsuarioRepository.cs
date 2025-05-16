@@ -2,6 +2,6 @@ using WebApp.Models.Entidades;
 
 namespace WebApp.Models.Interfaces.Repositories;
 
-public interface ILivroRepository : IRepository<Livro, string>
+public interface IUsuarioRepository : IRepository<Usuario, int>
 {
 }

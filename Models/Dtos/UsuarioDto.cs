@@ -1,16 +1,16 @@
-using WebApp.Models.Dtos;
+using WebApp.Models.Entidades;
 
-namespace WebApp.Models.Entidades;
+namespace WebApp.Models.Dtos;
 
-public class Usuario
+public class UsuarioDto
 {
     public int Id { get; set; }
     public string Login { get; set; }
     public string Senha { get; set; }
 
-    public UsuarioDto ConverterParaDto()
+    public Usuario ConverterParaEntidade()
     {
-        var result = new UsuarioDto()
+        var result = new Usuario()
         {
             Id = Id,
             Login = Login,

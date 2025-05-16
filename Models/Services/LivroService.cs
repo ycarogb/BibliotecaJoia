@@ -62,7 +62,7 @@ public class LivroService : ILivroService
         }
     }
 
-    public void EditarLivro(LivroDto livro)
+    public void Editar(LivroDto livro)
     {
         try
         {

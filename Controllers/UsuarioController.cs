@@ -4,13 +4,13 @@ using WebApp.Models.Interfaces.Services;
 
 namespace WebApp.Controllers;
 
-public class ClienteController : Controller
+public class UsuarioController: Controller
 {
-    private readonly IClienteService _clienteService;
+    private readonly IUsuarioService _usuarioService;
 
-    public ClienteController(IClienteService clienteService)
+    public UsuarioController(IUsuarioService usuarioService)
     {
-        _clienteService = clienteService;
+        _usuarioService = usuarioService;
     }
 
     public IActionResult Index()
@@ -22,8 +22,8 @@ public class ClienteController : Controller
     {
         try
         {
-            var clientes = _clienteService.Listar();
-            return View(clientes);
+            var usuarios = _usuarioService.Listar();
+            return View(usuarios);
         }
         catch (Exception e)
         {
@@ -31,28 +31,26 @@ public class ClienteController : Controller
         }
     }
 
-    //Apresenta o cliente que vai ser editado
     public IActionResult Edit(string? id)
     {
         if (id == null)
             return NotFound();
-        var cliente = _clienteService.ObterPorId(id);
-        if (cliente == null)
+        var usuario = _usuarioService.ObterPorId(id);
+        if (usuario == null)
             return NotFound();
 
-        return View(cliente);
+        return View(usuario);
     }
     
-    //Ao clicar em Editar, faz a rotina para atualizar dados de cliente
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit([Bind("Id, Nome, Cpf, Email, Telefone, Status")] ClienteDto cliente)
+    public IActionResult Edit([Bind("Nome, Autor, Editora, Id")] UsuarioDto usuario)
     {
-        if (cliente.Id == null)
+        if (usuario.Id == null)
             return NotFound();
         try
         {
-            _clienteService.Editar(cliente);
+            _usuarioService.Editar(usuario);
             return RedirectToAction("List");
         }
         catch (Exception e)
@@ -65,11 +63,23 @@ public class ClienteController : Controller
     {
         if (id == null)
             return NotFound();
-        var cliente = _clienteService.ObterPorId(id);
-        if (cliente == null)
+        var usuario = _usuarioService.ObterPorId(id);
+        if (usuario == null)
             return NotFound();
 
-        return View(cliente);
+        return View(usuario);
+    }
+
+    public IActionResult Delete(string? id)
+    {
+        if (id == null)
+            return NotFound();
+
+        var usuario = _usuarioService.ObterPorId(id);
+        if (usuario == null)
+            return NotFound();
+        
+        return View(usuario);
     }
 
     public IActionResult Create()
@@ -87,11 +97,11 @@ public class ClienteController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Create([Bind("Nome, Cpf, Email, Telefone")]ClienteDto cliente)
+    public IActionResult Create([Bind("Nome, Autor, Editora")]UsuarioDto usuario)
     {
         try
         {
-            _clienteService.Cadastrar(cliente);
+            _usuarioService.Cadastrar(usuario);
             return RedirectToAction("List");
         }
         catch (Exception e)
@@ -99,25 +109,13 @@ public class ClienteController : Controller
             throw e;
         }
     }
-    
-    public IActionResult Delete(string? id)
-    {
-        if (id == null)
-            return NotFound();
-
-        var cliente = _clienteService.ObterPorId(id);
-        if (cliente == null)
-            return NotFound();
-        
-        return View(cliente);
-    }
 
     [HttpPost]
-    public IActionResult Delete([Bind("Id, Nome, Cpf, Email, Telefone, Status")] ClienteDto cliente)
+    public IActionResult Delete([Bind("Id, Nome, Autor, Editora")] UsuarioDto usuario)
     {
         try
         {
-            _clienteService.Excluir(cliente.Id);
+            _usuarioService.Excluir(usuario.Id);
             return RedirectToAction("List");
         }
         catch (Exception e)

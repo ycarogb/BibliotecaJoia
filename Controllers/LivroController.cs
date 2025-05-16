@@ -50,7 +50,7 @@ public class LivroController : Controller
             return NotFound();
         try
         {
-            _livroService.EditarLivro(livro);
+            _livroService.Editar(livro);
             return RedirectToAction("List");
         }
         catch (Exception e)
