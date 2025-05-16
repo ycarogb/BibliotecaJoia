@@ -20,11 +20,11 @@ public static class SqlManager
             TSql.EXCLUIR_CLIENTE => "delete from Clientes where id = @id",
             TSql.ATUALIZAR_CLIENTE => "update Clientes set nome = @nome, email = @email, telefone = @telefone, idStatusCliente = @idStatusCliente where convert(varchar(36), id) = @id",
             
-            TSql.LISTAR_USUARIOS => "select  id, login, senha from Usuarios",
-            TSql.CADASTRAR_USUARIO => "insert into Usuarios (id, login, senha) values @id, @login, @senha)",
-            TSql.PESQUISAR_USUARIO => "select id, login, senha from Usuarios where id = @id",
-            TSql.EXCLUIR_USUARIO => "delete from Usuarios where id = @id",
-            TSql.ATUALIZAR_USUARIO => "update Usuarios set login = @login, senha = @senha where id = @id",
+            TSql.LISTAR_USUARIOS => "select  id, login, senha from Usuario",
+            TSql.CADASTRAR_USUARIO => "insert into Usuario (id, login, senha) values @id, @login, @senha)",
+            TSql.PESQUISAR_USUARIO => "select id, login, senha from Usuario where id = @id",
+            TSql.EXCLUIR_USUARIO => "delete from Usuario where id = @id",
+            TSql.ATUALIZAR_USUARIO => "update Usuario set login = @login, senha = @senha where id = @id",
             
             _ => throw new ArgumentOutOfRangeException(nameof(operacaoSql), operacaoSql, null)
         };
