@@ -1,3 +1,4 @@
+using WebApp.Models.Dtos;
 using WebApp.Models.Entidades;
 
 namespace WebApp.Models.Interfaces.Repositories;
@@ -21,4 +22,5 @@ public interface IContextData
     Usuario ObterUsuarioPorId(int id);
     void AtualizarUsuario(Usuario usuario);
     void ExcluirUsuario(int id);
+    UsuarioDto EfetuarLogin(UsuarioDto usuarioDto);
 }

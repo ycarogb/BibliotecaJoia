@@ -1,5 +1,6 @@
 using System.Data;
 using System.Data.SqlClient;
+using WebApp.Models.Dtos;
 using WebApp.Models.Entidades;
 using WebApp.Models.Enums;
 using WebApp.Models.Interfaces.Repositories;
@@ -516,6 +517,48 @@ public class ContextDataSqlServer : IContextData
         finally
         {
             if(_connection is { State: ConnectionState.Connecting })
+                _connection.Close(); //fecha conexão com o banco de dados
+        }
+    }
+
+    public UsuarioDto EfetuarLogin(UsuarioDto dto)
+    {
+        var usuario = new UsuarioDto();
+        try
+        {
+            var query = SqlManager.GetSql(TSql.EFETUAR_LOGIN);
+            var command = new SqlCommand(query, _connection); //cria um comando SQL a partir da query e da conexão
+            command.Parameters.Add("@login", SqlDbType.VarChar).Value = dto.Login;
+            command.Parameters.Add("@senha", SqlDbType.VarChar).Value = dto.Senha;
+            var dataset = new DataSet(); //funciona como banco em memória
+            var adapter = new SqlDataAdapter(command); //consegue executar comandos para poder capturar os dados
+            adapter.Fill(dataset);
+
+            var rows = dataset.Tables[0].Rows; //necessário abrir dataset para acessar linhas e colunas da tabela
+
+            foreach (DataRow item in rows)
+            {
+                var colunas = item.ItemArray;
+                var codigo = (int)colunas[0];
+                var login = colunas[1].ToString();
+                var senha = colunas[2].ToString();
+
+                usuario = new UsuarioDto { Id = codigo, Login = login, Senha = senha };
+            }
+
+            adapter = null;
+            dataset = null;
+
+            return usuario;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        finally
+        {
+            if (_connection is { State: ConnectionState.Connecting })
                 _connection.Close(); //fecha conexão com o banco de dados
         }
     }
