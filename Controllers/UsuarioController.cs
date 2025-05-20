@@ -123,4 +123,23 @@ public class UsuarioController: Controller
             throw e;
         }
     }
+
+    [HttpPost]
+    public IActionResult Login(string login, string senha)
+    {
+        try
+        {
+            var usuario = new UsuarioDto() { Login = login, Senha = senha };
+            _usuarioService.EfetuarLogin(usuario);
+            
+            
+            return RedirectToAction("List");
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

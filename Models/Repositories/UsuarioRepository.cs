@@ -1,3 +1,4 @@
+using WebApp.Models.Dtos;
 using WebApp.Models.Entidades;
 using WebApp.Models.Interfaces.Repositories;
 
@@ -35,5 +36,10 @@ public class UsuarioRepository : IUsuarioRepository
     public void Excluir(int id)
     {
         _contextData.ExcluirUsuario(id);
+    }
+
+    public UsuarioDto EfetuarLogin(UsuarioDto usuarioDto)
+    {
+        return _contextData.EfetuarLogin(usuarioDto);
     }
 }

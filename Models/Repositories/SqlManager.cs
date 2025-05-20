@@ -25,6 +25,7 @@ public static class SqlManager
             TSql.PESQUISAR_USUARIO => "select id, login, senha from Usuario where id = @id",
             TSql.EXCLUIR_USUARIO => "delete from Usuario where id = @id",
             TSql.ATUALIZAR_USUARIO => "update Usuario set login = @login, senha = @senha where id = @id",
+            TSql.EFETUAR_LOGIN => "select id, login, senha from Usuario where login = @login and senha = @senha",
             
             _ => throw new ArgumentOutOfRangeException(nameof(operacaoSql), operacaoSql, null)
         };

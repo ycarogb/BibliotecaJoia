@@ -1,3 +1,4 @@
+using WebApp.Models.Dtos;
 using WebApp.Models.Entidades;
 using WebApp.Models.Interfaces.Repositories;
 
@@ -167,6 +168,11 @@ public class ContextDataFake : IContextData
     }
 
     public void ExcluirUsuario(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public UsuarioDto EfetuarLogin(UsuarioDto usuarioDto)
     {
         throw new NotImplementedException();
     }

@@ -15,37 +15,90 @@ public class UsuarioService : IUsuarioService
 
     public void Cadastrar(UsuarioDto usuarioDto)
     {
-        var usuario = usuarioDto.ConverterParaEntidade();
-        _usuarioRepository.Cadastrar(usuario);
+        try
+        {
+            var usuario = usuarioDto.ConverterParaEntidade();
+            _usuarioRepository.Cadastrar(usuario);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public List<UsuarioDto> Listar()
     {
-        var usuarios = _usuarioRepository.Listar();
-        var usuarioDtos = new List<UsuarioDto>();
-        foreach (var usuario in usuarios)
+        try
         {
-            usuarioDtos.Add(usuario.ConverterParaDto());
-        }
+            var usuarios = _usuarioRepository.Listar();
+            var usuarioDtos = new List<UsuarioDto>();
+            foreach (var usuario in usuarios)
+            {
+                usuarioDtos.Add(usuario.ConverterParaDto());
+            }
 
-        return usuarioDtos;
+            return usuarioDtos;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public UsuarioDto ObterPorId(int id)
     {
-        var usuarioDto = _usuarioRepository.ObterPorId(id).ConverterParaDto();
-        return usuarioDto;
-
+        try
+        {
+            var usuarioDto = _usuarioRepository.ObterPorId(id).ConverterParaDto();
+            return usuarioDto;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public void Editar(UsuarioDto usuarioDto)
     {
-        var usuario = usuarioDto.ConverterParaEntidade();
-        _usuarioRepository.Atualizar(usuario);
+        try
+        {
+            var usuario = usuarioDto.ConverterParaEntidade();
+            _usuarioRepository.Atualizar(usuario);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public void Excluir(int id)
     {
-        _usuarioRepository.Excluir(id);
+        try
+        {
+            _usuarioRepository.Excluir(id);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public UsuarioDto EfetuarLogin(UsuarioDto usuario)
+    {
+        try
+        {
+            var usuarioLogado = _usuarioRepository.EfetuarLogin(usuario);
+            return usuarioLogado;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;          
+        }
     }
 }
