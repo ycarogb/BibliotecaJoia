@@ -21,10 +21,17 @@ ConfigureDataSource(builder.Services);
 void AdicionarIdentity(IServiceCollection services)
 {
     services.AddHttpContextAccessor();
-    services
-        .AddIdentityCore<Usuario>(options => { options.User.RequireUniqueEmail = false; })
-        .AddUserStore<CustomUserStore>()
-        .AddDefaultTokenProviders();
+    
+    builder.Services.AddIdentity<Usuario, IdentityRole>() // <-- sua classe de usuário
+        .AddEntityFrameworkStores<IdentityContext>()
+        .AddDefaultTokenProviders(); 
+
+    builder.Services.ConfigureApplicationCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";   // caminho da tela de login
+        options.AccessDeniedPath = "/Account/AcessoNegado"; // opcional
+    });
+    
     services.AddScoped<SignInManager<Usuario>>();
     services.AddScoped<UserManager<Usuario>>();
 }
@@ -84,4 +91,7 @@ void ConfigureDataSource(IServiceCollection services)
             services.TryAddScoped<IConnectionManager, ConnectionManager>();
             break;
     }
+    
+    builder.Services.AddDbContext<IdentityContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("BibliotecaJoia")));
 }

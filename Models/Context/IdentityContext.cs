@@ -6,9 +6,9 @@ namespace WebApp.Models.Context;
 
 public class IdentityContext : IdentityDbContext<Usuario>
 {
-    public IdentityContext(DbContextOptions<IdentityDbContext> options) : base(options)
+    public IdentityContext(DbContextOptions<IdentityContext> options) : base(options)
     {
-        
     }
-    
+   
+    public DbSet<Usuario> Usuarios { get; set; }
 }

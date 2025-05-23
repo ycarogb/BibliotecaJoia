@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models.Dtos;
@@ -21,11 +20,6 @@ public class UsuarioController: Controller
         _usuarioService = usuarioService;
         _signInManager = signInManager;
         _userManager = userManager;
-    }
-
-    public IActionResult Login()
-    {
-        return View();
     }
 
     public IActionResult List()
@@ -133,37 +127,67 @@ public class UsuarioController: Controller
             throw e;
         }
     }
+    
+    [HttpGet]
+    public IActionResult Registrar()
+    {
+        return View();
+    }
 
     [HttpPost]
-    [AllowAnonymous]
-    public async Task<IActionResult> Login(string login, string senha)
+    public async Task<IActionResult> Registrar(string email, string senha)
     {
-        try
+        if (!ModelState.IsValid)
+            return View();
+
+        var novoUsuario = new Usuario
         {
-            var usuarioEncontrado = await _userManager.FindByNameAsync(login);
+            UserName = email,
+            Email = email,
+            Login = email,
+            Senha = senha,
+            UserType = "Administrador"
+        };
 
-            if (usuarioEncontrado == null)
-            {
-                ModelState.AddModelError(string.Empty, "Usuário não encontrado!" );
-                return Login();
-            }
-
-            var result = await _signInManager.PasswordSignInAsync(usuarioEncontrado, senha, isPersistent: false, lockoutOnFailure: false);
-            if (result.Succeeded)
-            {
-                // Login bem-sucedido, redirecione para a página inicial ou outra página
-                return RedirectToAction("Index", "Home");
-            }
-            
-            ModelState.AddModelError(string.Empty, "Senha incorreta!");
-
-            return Login();
-        }
-        catch (Exception e)
+        var resultado = await _userManager.CreateAsync(novoUsuario, senha);
+        if (resultado.Succeeded)
         {
-            Console.WriteLine(e);
-            ModelState.AddModelError(string.Empty, "Ocorreu um erro ao tentar fazer login.");
-            return Login();
+            //await _signInManager.SignInAsync(novoUsuario, isPersistent: false);
+            return RedirectToAction("Index", "Home");
         }
+
+        foreach (var erro in resultado.Errors)
+            ModelState.AddModelError("", erro.Description);
+
+        return View();
+    }
+    
+    [HttpGet]
+    public IActionResult Login()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Login(string email, string senha)
+    {
+        if (!ModelState.IsValid)
+            return View();
+
+        var resultado = await _signInManager.PasswordSignInAsync(email, senha, isPersistent: false, lockoutOnFailure: false);
+        if (resultado.Succeeded)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        ModelState.AddModelError("", "E-mail ou senha inválidos.");
+        return View();
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
     }
 }
