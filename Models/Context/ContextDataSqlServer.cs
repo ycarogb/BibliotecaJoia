@@ -1,5 +1,7 @@
 using System.Data;
 using System.Data.SqlClient;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WebApp.Models.Dtos;
 using WebApp.Models.Entidades;
 using WebApp.Models.Enums;
@@ -8,15 +10,20 @@ using WebApp.Models.Repositories;
 
 namespace WebApp.Models.Context;
 
-public class ContextDataSqlServer : IContextData
+public class ContextDataSqlServer : IdentityDbContext<Usuario>, IContextData
 {
     private readonly SqlConnection? _connection;
 
-    public ContextDataSqlServer(IConnectionManager connectionManager)
+    public ContextDataSqlServer(
+        IConnectionManager connectionManager, 
+        DbContextOptions<ContextDataSqlServer> options) : base(options)
     {
         _connection = connectionManager.GetConnection();
     }
-    public void CadastrarLivro(Livro livro)
+
+    #region Comandos Livro
+
+        public void CadastrarLivro(Livro livro)
     {
         try
         {
@@ -185,7 +192,11 @@ public class ContextDataSqlServer : IContextData
         }
     }
 
-    public void CadastrarCliente(Cliente cliente)
+    #endregion
+
+    #region Comandos Cliente
+
+        public void CadastrarCliente(Cliente cliente)
     {
         try
         {
@@ -357,7 +368,11 @@ public class ContextDataSqlServer : IContextData
         }
     }
 
-    public void CadastrarUsuario(Usuario usuario)
+    #endregion
+    
+    #region Comandos usuario
+
+        public void CadastrarUsuario(Usuario usuario)
     {
         try
         {
@@ -400,7 +415,7 @@ public class ContextDataSqlServer : IContextData
             {
                 var colunas = item.ItemArray;
 
-                var id = (int)colunas[0];
+                var id = colunas[0].ToString();
                 var login = colunas[1].ToString();
                 var senha = colunas[2].ToString();
 
@@ -444,7 +459,7 @@ public class ContextDataSqlServer : IContextData
             foreach (DataRow item in rows)
             {
                 var colunas = item.ItemArray;
-                var codigo = (int)colunas[0];
+                var codigo = colunas[0].ToString();
                 var login = colunas[1].ToString();
                 var senha = colunas[2].ToString();
 
@@ -521,11 +536,13 @@ public class ContextDataSqlServer : IContextData
         }
     }
 
-    public UsuarioDto EfetuarLogin(UsuarioDto dto)
+    #endregion
+    
+    public UsuarioDto? EfetuarLogin(UsuarioDto dto)
     {
-        var usuario = new UsuarioDto();
         try
         {
+            UsuarioDto? usuario = null;
             var query = SqlManager.GetSql(TSql.EFETUAR_LOGIN);
             var command = new SqlCommand(query, _connection); //cria um comando SQL a partir da query e da conexão
             command.Parameters.Add("@login", SqlDbType.VarChar).Value = dto.Login;
@@ -539,16 +556,13 @@ public class ContextDataSqlServer : IContextData
             foreach (DataRow item in rows)
             {
                 var colunas = item.ItemArray;
-                var codigo = (int)colunas[0];
+                var codigo = colunas[0].ToString();
                 var login = colunas[1].ToString();
                 var senha = colunas[2].ToString();
 
                 usuario = new UsuarioDto { Id = codigo, Login = login, Senha = senha };
             }
-
-            adapter = null;
-            dataset = null;
-
+            
             return usuario;
         }
         catch (Exception e)

@@ -22,5 +22,5 @@ public interface IContextData
     Usuario ObterUsuarioPorId(int id);
     void AtualizarUsuario(Usuario usuario);
     void ExcluirUsuario(int id);
-    UsuarioDto EfetuarLogin(UsuarioDto usuarioDto);
+    UsuarioDto? EfetuarLogin(UsuarioDto usuarioDto);
 }

@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using WebApp.Models.Context;
+using WebApp.Models.Entidades;
 using WebApp.Models.Interfaces.Repositories;
 using WebApp.Models.Interfaces.Services;
 using WebApp.Models.Repositories;
@@ -12,8 +15,19 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 AdicionarDependenciasRepositories(builder.Services);
 AdicionarDependenciasServices(builder.Services);
-
+AdicionarIdentity(builder.Services);
 ConfigureDataSource(builder.Services);
+
+void AdicionarIdentity(IServiceCollection services)
+{
+    services.AddHttpContextAccessor();
+    services
+        .AddIdentityCore<Usuario>(options => { options.User.RequireUniqueEmail = false; })
+        .AddUserStore<CustomUserStore>()
+        .AddDefaultTokenProviders();
+    services.AddScoped<SignInManager<Usuario>>();
+    services.AddScoped<UserManager<Usuario>>();
+}
 
 void AdicionarDependenciasRepositories(IServiceCollection services)
 {
@@ -44,6 +58,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -63,8 +78,10 @@ void ConfigureDataSource(IServiceCollection services)
             services.TryAddScoped<IContextData, ContextDataFake>();
             break;
         case "SqlServer":
+            services.AddDbContext<ContextDataSqlServer>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("BibliotecaJoia")));
             services.TryAddScoped<IContextData, ContextDataSqlServer>();
-            builder.Services.TryAddScoped<IConnectionManager, ConnectionManager>();
+            services.TryAddScoped<IConnectionManager, ConnectionManager>();
             break;
     }
 }

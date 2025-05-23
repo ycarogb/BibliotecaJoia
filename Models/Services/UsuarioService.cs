@@ -88,7 +88,7 @@ public class UsuarioService : IUsuarioService
         }
     }
 
-    public UsuarioDto EfetuarLogin(UsuarioDto usuario)
+    public UsuarioDto? EfetuarLogin(UsuarioDto usuario)
     {
         try
         {
