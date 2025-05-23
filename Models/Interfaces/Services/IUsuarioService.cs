@@ -4,5 +4,5 @@ namespace WebApp.Models.Interfaces.Services;
 
 public interface IUsuarioService : IService<UsuarioDto, int>
 {
-    UsuarioDto EfetuarLogin(UsuarioDto usuario);
+    UsuarioDto? EfetuarLogin(UsuarioDto usuario);
 }

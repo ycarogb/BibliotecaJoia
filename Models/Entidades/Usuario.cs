@@ -1,12 +1,13 @@
+using Microsoft.AspNetCore.Identity;
 using WebApp.Models.Dtos;
 
 namespace WebApp.Models.Entidades;
 
-public class Usuario
+public class Usuario : IdentityUser
 {
-    public int Id { get; set; }
     public string Login { get; set; }
     public string Senha { get; set; }
+    public string UserType { get; set; }
 
     public UsuarioDto ConverterParaDto()
     {

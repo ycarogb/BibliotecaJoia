@@ -172,7 +172,7 @@ public class ContextDataFake : IContextData
         throw new NotImplementedException();
     }
 
-    public UsuarioDto EfetuarLogin(UsuarioDto usuarioDto)
+    public UsuarioDto? EfetuarLogin(UsuarioDto usuarioDto)
     {
         throw new NotImplementedException();
     }

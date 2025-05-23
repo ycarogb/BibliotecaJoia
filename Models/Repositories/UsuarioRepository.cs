@@ -38,7 +38,7 @@ public class UsuarioRepository : IUsuarioRepository
         _contextData.ExcluirUsuario(id);
     }
 
-    public UsuarioDto EfetuarLogin(UsuarioDto usuarioDto)
+    public UsuarioDto? EfetuarLogin(UsuarioDto usuarioDto)
     {
         return _contextData.EfetuarLogin(usuarioDto);
     }

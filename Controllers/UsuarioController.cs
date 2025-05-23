@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models.Dtos;
+using WebApp.Models.Entidades;
 using WebApp.Models.Interfaces.Services;
 
 namespace WebApp.Controllers;
@@ -7,13 +10,20 @@ namespace WebApp.Controllers;
 public class UsuarioController: Controller
 {
     private readonly IUsuarioService _usuarioService;
+    private readonly SignInManager<Usuario> _signInManager;
+    private readonly UserManager<Usuario> _userManager;
 
-    public UsuarioController(IUsuarioService usuarioService)
+    public UsuarioController(
+        IUsuarioService usuarioService, 
+        SignInManager<Usuario> signInManager, 
+        UserManager<Usuario> userManager)
     {
         _usuarioService = usuarioService;
+        _signInManager = signInManager;
+        _userManager = userManager;
     }
 
-    public IActionResult Index()
+    public IActionResult Login()
     {
         return View();
     }
@@ -115,7 +125,7 @@ public class UsuarioController: Controller
     {
         try
         {
-            _usuarioService.Excluir(usuario.Id);
+            _usuarioService.Excluir(int.Parse(usuario.Id));
             return RedirectToAction("List");
         }
         catch (Exception e)
@@ -125,21 +135,35 @@ public class UsuarioController: Controller
     }
 
     [HttpPost]
-    public IActionResult Login(string login, string senha)
+    [AllowAnonymous]
+    public async Task<IActionResult> Login(string login, string senha)
     {
         try
         {
-            var usuario = new UsuarioDto() { Login = login, Senha = senha };
-            _usuarioService.EfetuarLogin(usuario);
-            
-            
-            return RedirectToAction("List");
+            var usuarioEncontrado = await _userManager.FindByNameAsync(login);
 
+            if (usuarioEncontrado == null)
+            {
+                ModelState.AddModelError(string.Empty, "Usuário não encontrado!" );
+                return Login();
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(usuarioEncontrado, senha, isPersistent: false, lockoutOnFailure: false);
+            if (result.Succeeded)
+            {
+                // Login bem-sucedido, redirecione para a página inicial ou outra página
+                return RedirectToAction("Index", "Home");
+            }
+            
+            ModelState.AddModelError(string.Empty, "Senha incorreta!");
+
+            return Login();
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
+            ModelState.AddModelError(string.Empty, "Ocorreu um erro ao tentar fazer login.");
+            return Login();
         }
     }
 }
