@@ -14,7 +14,8 @@ public class UsuarioDto
         {
             Id = Id,
             Login = Login,
-            Senha = Senha
+            Senha = Senha,
+            Email = Login
         };
 
         return result;

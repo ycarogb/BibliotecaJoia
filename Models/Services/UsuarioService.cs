@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using WebApp.Models.Dtos;
 using WebApp.Models.Interfaces.Repositories;
 using WebApp.Models.Interfaces.Services;
@@ -13,12 +14,12 @@ public class UsuarioService : IUsuarioService
         _usuarioRepository = usuarioRepository;
     }
 
-    public void Cadastrar(UsuarioDto usuarioDto)
+    public async Task<JsonResult> CadastrarAsync(string email, string senha)
     {
         try
         {
-            var usuario = usuarioDto.ConverterParaEntidade();
-            _usuarioRepository.Cadastrar(usuario);
+            var result = await _usuarioRepository.CadastrarAsync(email, senha);
+            return result;
         }
         catch (Exception e)
         {
@@ -47,7 +48,7 @@ public class UsuarioService : IUsuarioService
         }
     }
 
-    public UsuarioDto ObterPorId(int id)
+    public UsuarioDto ObterPorId(string id)
     {
         try
         {
@@ -61,12 +62,12 @@ public class UsuarioService : IUsuarioService
         }
     }
 
-    public void Editar(UsuarioDto usuarioDto)
+    public async Task EditarAsync(UsuarioDto usuarioDto)
     {
         try
         {
             var usuario = usuarioDto.ConverterParaEntidade();
-            _usuarioRepository.Atualizar(usuario);
+            await _usuarioRepository.AtualizarAsync(usuario);
         }
         catch (Exception e)
         {
@@ -75,30 +76,16 @@ public class UsuarioService : IUsuarioService
         }
     }
 
-    public void Excluir(int id)
+    public async Task ExcluirAsync(string id)
     {
         try
         {
-            _usuarioRepository.Excluir(id);
+            await _usuarioRepository.ExcluirAsync(id);
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             throw;
-        }
-    }
-
-    public UsuarioDto? EfetuarLogin(UsuarioDto usuario)
-    {
-        try
-        {
-            var usuarioLogado = _usuarioRepository.EfetuarLogin(usuario);
-            return usuarioLogado;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;          
         }
     }
 }

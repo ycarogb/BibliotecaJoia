@@ -1,38 +1,54 @@
 @model WebApp.Models.Dtos.UsuarioDto
 
-@{
-    ViewData["Title"] = "Edit";
-}
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<h2>Editar Usuário</h2>
 
-<h1>Atualização de Usuários</h1>
-
-<hr/>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Login" class="control-label"></label>
-                <input asp-for="Login" class="form-control" />
-                <span asp-validation-for="Login" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Senha" class="control-label"></label>
-                <input asp-for="Senha" class="form-control" />
-                <span asp-validation-for="Senha" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary"/>
-            </div>
-        </form>
-    </div>
-</div>
-<div>
-    <a asp-action="List">Voltar</a>
+<!-- Balão de Alerta -->
+<div id="alert" class="alert alert-danger" style="display:none; position: fixed; top: 20px; right: 20px; z-index: 1000;">
+    <span id="alert-message"></span>
 </div>
 
+<form id="formEdit" asp-action="Edit" method="post">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="text" name="Login" value="@Model.Login" placeholder="Login" required />
+    <input type="password" name="Senha" placeholder="Senha" required />
+    <button type="submit">Salvar</button>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#formEdit').submit(function (event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function (response) {
+                    if (response.success) {
+                        window.location.href = '/Usuario/List'; // Redireciona para a lista de usuários
+                    } else {
+                        // Exibe o balão de alerta com a mensagem de erro
+                        $('#alert-message').text(response.message);
+                        $('#alert').show();
+                    }
+                },
+                error: function () {
+                    $('#alert-message').text('Ocorreu um erro ao processar sua solicitação.');
+                    $('#alert').show();
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    .alert {
+        padding: 15px;
+        border-radius: 5px;
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+</style>

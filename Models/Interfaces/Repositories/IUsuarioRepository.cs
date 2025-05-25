@@ -1,12 +1,13 @@
-using WebApp.Models.Dtos;
+using Microsoft.AspNetCore.Mvc;
 using WebApp.Models.Entidades;
 
 namespace WebApp.Models.Interfaces.Repositories;
 
-public interface IUsuarioRepository : IRepository<Usuario, int>
+public interface IUsuarioRepository 
 {
-    UsuarioDto? EfetuarLogin(UsuarioDto usuarioDto);
-    Task<Usuario?> ObterPorEmailAsync(string email);
-    Task CriarAsync(Usuario usuario, string senha);
-    Task<bool> VerificarSenhaAsync(Usuario usuario, string senha);
+    Task<JsonResult> CadastrarAsync(string email, string senha);
+    List<Usuario> Listar();
+    Usuario ObterPorId(string id);
+    Task AtualizarAsync(Usuario usuario);
+    Task ExcluirAsync(string id);
 }

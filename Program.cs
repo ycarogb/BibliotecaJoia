@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using WebApp.Models.Context;
@@ -11,7 +12,9 @@ using WebApp.Models.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+builder.Services
+    .AddControllersWithViews(options => { options.Filters.Add(new AuthorizeFilter()); })
+    .AddRazorRuntimeCompilation();
 
 AdicionarDependenciasRepositories(builder.Services);
 AdicionarDependenciasServices(builder.Services);
@@ -28,8 +31,7 @@ void AdicionarIdentity(IServiceCollection services)
 
     builder.Services.ConfigureApplicationCookie(options =>
     {
-        options.LoginPath = "/Account/Login";   // caminho da tela de login
-        options.AccessDeniedPath = "/Account/AcessoNegado"; // opcional
+        options.LoginPath = "/Usuario/Login";   // caminho da tela de login
     });
     
     services.AddScoped<SignInManager<Usuario>>();
@@ -93,5 +95,5 @@ void ConfigureDataSource(IServiceCollection services)
     }
     
     builder.Services.AddDbContext<IdentityContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("BibliotecaJoia")));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("BibliotecaJoia")).EnableSensitiveDataLogging());
 }

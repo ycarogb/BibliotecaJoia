@@ -1,5 +1,51 @@
-<form asp-action="Registrar" method="post">
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<h2>Registrar-se</h2>
+
+<!-- Balão de Alerta -->
+<div id="alert" class="alert alert-danger" style="display:none; position: fixed; top: 20px; right: 20px; z-index: 1000;">
+    <span id="alert-message"></span>
+</div>
+
+<form id="formRegistrar" asp-action="Registrar" method="post">
     <input type="email" name="email" placeholder="Email" required />
     <input type="password" name="senha" placeholder="Senha" required />
     <button type="submit">Registrar</button>
 </form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#formRegistrar').submit(function (event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function (response) {
+                    if (response.success) {
+                        window.location.href = '/Home/Index'; // Redireciona para a página inicial
+                    } else {
+                        // Exibe o balão de alerta com a mensagem de erro
+                        $('#alert-message').text(response.message);
+                        $('#alert').show();
+                    }
+                },
+                error: function () {
+                    $('#alert-message').text('Ocorreu um erro ao processar sua solicitação.');
+                    $('#alert').show();
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    .alert {
+        padding: 15px;
+        border-radius: 5px;
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+</style>
