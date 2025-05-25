@@ -25,7 +25,7 @@ void AdicionarIdentity(IServiceCollection services)
 {
     services.AddHttpContextAccessor();
     
-    builder.Services.AddIdentity<Usuario, IdentityRole>() // <-- sua classe de usuário
+    builder.Services.AddIdentity<Usuario, IdentityRole>() 
         .AddEntityFrameworkStores<IdentityContext>()
         .AddDefaultTokenProviders(); 
 
@@ -54,6 +54,12 @@ void AdicionarDependenciasServices(IServiceCollection services)
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await CriarRoles(services);
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -73,6 +79,19 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+async Task CriarRoles(IServiceProvider serviceProvider)
+{
+    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    string[] roleNames = { "Administrador", "Cliente" };
+    foreach (var roleName in roleNames)
+    {
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+    }
+}
 
 await app.RunAsync();
 return;

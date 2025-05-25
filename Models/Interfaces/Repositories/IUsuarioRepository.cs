@@ -5,7 +5,7 @@ namespace WebApp.Models.Interfaces.Repositories;
 
 public interface IUsuarioRepository 
 {
-    Task<JsonResult> CadastrarAsync(string email, string senha);
+    Task<JsonResult> CadastrarAsync(string email, string senha, string role);
     List<Usuario> Listar();
     Usuario ObterPorId(string id);
     Task AtualizarAsync(Usuario usuario);

@@ -7,6 +7,7 @@ using WebApp.Models.Interfaces.Services;
 
 namespace WebApp.Controllers;
 
+[Authorize(Roles = "Administrador")]
 public class UsuarioController: Controller
 {
     private readonly IUsuarioService _usuarioService;
@@ -62,18 +63,6 @@ public class UsuarioController: Controller
         }
     }
     
-    public IActionResult Delete(string id)
-    {
-        if (id == null)
-            return NotFound();
-
-        var usuario = _usuarioService.ObterPorId(id);
-        if (usuario == null)
-            return NotFound();
-        
-        return View(usuario);
-    }
-
     public IActionResult Create()
     {
         try
@@ -85,6 +74,18 @@ public class UsuarioController: Controller
             Console.WriteLine(e);
             throw;
         }   
+    }
+    
+    public IActionResult Delete(string id)
+    {
+        if (id == null)
+            return NotFound();
+
+        var usuario = _usuarioService.ObterPorId(id);
+        if (usuario == null)
+            return NotFound();
+        
+        return View(usuario);
     }
     
     [HttpPost]
@@ -103,19 +104,22 @@ public class UsuarioController: Controller
     }
     
     [HttpGet]
+    [AllowAnonymous]
     public IActionResult Registrar()
     {
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> Registrar(string email, string senha)
+    [AllowAnonymous]
+    public async Task<IActionResult> Registrar(string email, string senha, bool isAdmin)
     {
         if (!ModelState.IsValid)
             return View();
-        // Chama o serviço de domínio para criar o usuário
-        var resultado = await _usuarioService.CadastrarAsync(email, senha);
-        return resultado; // Retorna a resposta JSON do serviço
+
+        var role = isAdmin ? "Administrador" : "Cliente";
+        var resultado = await _usuarioService.CadastrarAsync(email, senha, role);
+        return resultado; 
     }
     
     private JsonResult? VerificarErrosNaSenha(string senha)
@@ -159,6 +163,7 @@ public class UsuarioController: Controller
         return View();
     }
     
+    [AllowAnonymous]
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();

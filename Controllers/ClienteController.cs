@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models.Dtos;
 using WebApp.Models.Interfaces.Services;
 
 namespace WebApp.Controllers;
 
+[Authorize(Roles = "Administrador")]
 public class ClienteController : Controller
 {
     private readonly IClienteService _clienteService;

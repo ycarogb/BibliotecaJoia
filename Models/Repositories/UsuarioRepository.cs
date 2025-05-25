@@ -16,7 +16,7 @@ public class UsuarioRepository : IUsuarioRepository
         _signInManager = signInManager;
     }
 
-    public async Task<JsonResult> CadastrarAsync(string email, string senha)
+    public async Task<JsonResult> CadastrarAsync(string email, string senha, string role)
     {
         var erroSenha = VerificarErrosNaSenha(senha);
         if (erroSenha != null) return erroSenha;
@@ -25,12 +25,13 @@ public class UsuarioRepository : IUsuarioRepository
             UserName = email,
             Email = email,
             Login = email,
-            Senha = senha,
-            UserType = "Administrador"
+            Senha = senha
         };
+        
         var resultado = await _userManager.CreateAsync(novoUsuario, senha);
         if (resultado.Succeeded)
         {
+            await _userManager.AddToRoleAsync(novoUsuario, role);
             await _signInManager.SignInAsync(novoUsuario, isPersistent: false);
             return new JsonResult(new { success = true });
         }
