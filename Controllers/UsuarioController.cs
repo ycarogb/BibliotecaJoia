@@ -93,7 +93,6 @@ public class UsuarioController: Controller
     {
         try
         {
-            if (!ModelState.IsValid) return View();
             await _usuarioService.ExcluirAsync(usuario.Id);
             return RedirectToAction("List");
         }
@@ -117,8 +116,7 @@ public class UsuarioController: Controller
         if (!ModelState.IsValid)
             return View();
 
-        var role = isAdmin ? "Administrador" : "Cliente";
-        var resultado = await _usuarioService.CadastrarAsync(email, senha, role);
+        var resultado = await _usuarioService.CadastrarAsync(email, senha, isAdmin);
         return resultado; 
     }
     

@@ -9,5 +9,5 @@ public interface IUsuarioService
     UsuarioDto ObterPorId(string id);
     Task EditarAsync(UsuarioDto usuario);
     Task ExcluirAsync(string usuarioId);
-    Task<JsonResult> CadastrarAsync(string email, string senha, string role);
+    Task<JsonResult> CadastrarAsync(string email, string senha, bool isAdmin);
 }

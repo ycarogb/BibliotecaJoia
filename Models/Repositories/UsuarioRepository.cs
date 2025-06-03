@@ -16,16 +16,18 @@ public class UsuarioRepository : IUsuarioRepository
         _signInManager = signInManager;
     }
 
-    public async Task<JsonResult> CadastrarAsync(string email, string senha, string role)
+    public async Task<JsonResult> CadastrarAsync(string email, string senha, bool isAdmin)
     {
         var erroSenha = VerificarErrosNaSenha(senha);
         if (erroSenha != null) return erroSenha;
+        var role = isAdmin ? "Administrador" : "Cliente";
         var novoUsuario = new Usuario
         {
             UserName = email,
             Email = email,
             Login = email,
-            Senha = senha
+            Senha = senha,
+            UserType = role
         };
         
         var resultado = await _userManager.CreateAsync(novoUsuario, senha);

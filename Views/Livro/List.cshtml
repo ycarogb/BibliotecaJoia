@@ -40,11 +40,18 @@
         <td>
             @Html.DisplayFor(modelItem => item.Editora)
         </td>
+        @if (User.IsInRole("Administrador"))
+        {
         <td>
             @Html.ActionLink("Atualizar", "Edit", new {  id=item.Id }) |
             @Html.ActionLink("Detalhes", "Details", new { id=item.Id }) |
             @Html.ActionLink("Excluir", "Delete", new { id=item.Id })
         </td>
+        }
+        <td>
+            @Html.ActionLink("Detalhes", "Details", new { id=item.Id }) 
+        </td>
+
     </tr>
 }
         </thead>

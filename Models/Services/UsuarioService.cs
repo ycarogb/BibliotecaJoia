@@ -14,11 +14,11 @@ public class UsuarioService : IUsuarioService
         _usuarioRepository = usuarioRepository;
     }
 
-    public async Task<JsonResult> CadastrarAsync(string email, string senha, string role)
+    public async Task<JsonResult> CadastrarAsync(string email, string senha, bool isAdmin)
     {
         try
         {
-            var result = await _usuarioRepository.CadastrarAsync(email, senha, role);
+            var result = await _usuarioRepository.CadastrarAsync(email, senha, isAdmin);
             return result;
         }
         catch (Exception e)
