@@ -29,5 +29,9 @@
     </table>
 </div>
 <div>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) | <a asp-action="List">Voltar</a>
+    @if (User.IsInRole("Administrador"))
+    {
+        @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) @: |
+    }
+    <a asp-action="List">Voltar</a>
 </div>

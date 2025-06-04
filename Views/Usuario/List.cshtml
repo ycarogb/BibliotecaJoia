@@ -12,20 +12,22 @@
 </head>
 <body>
 <p>
-    <a asp-action="Create">Adicionar usuário</a>
+    <a asp-action="Registrar">Adicionar usuário</a>
 </p>
 <div>
     <table class="table">
         <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.First().Login)
+                @Html.DisplayNameFor(model => model[0].Login)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().Senha)
+                @Html.DisplayNameFor(model => model[0].Senha)
             </th>
             <th></th>
         </tr>
+        </thead>
+        <tbody>
         @foreach (var item in Model){
         <tr>
             <td>
@@ -40,7 +42,7 @@
             </td>
         </tr>
         }
-        </thead>
+        </tbody>
     </table>
 </div>
 </body>

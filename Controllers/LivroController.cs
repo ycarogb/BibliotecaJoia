@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models.Dtos;
 using WebApp.Models.Interfaces.Services;
+using WebApp.Models.ViewsModels;
 
 namespace WebApp.Controllers;
 
@@ -23,7 +24,13 @@ public class LivroController : Controller
         try
         {
             var livros = _livroService.Listar();
-            return View(livros);
+            var viewModel = new ListagemLivroViewModel()
+            {
+                Livros = livros,
+                Administrador = User.IsInRole("Administrador"),
+                Cliente = User.IsInRole("Cliente")
+            };
+            return View(viewModel);
         }
         catch (Exception e)
         {

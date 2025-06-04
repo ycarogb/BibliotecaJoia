@@ -19,22 +19,24 @@
         <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.First().Nome)
+                @Html.DisplayNameFor(model => model[0].Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().Cpf)
+                @Html.DisplayNameFor(model => model[0].Cpf)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().Email)
+                @Html.DisplayNameFor(model => model[0].Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().Telefone)
+                @Html.DisplayNameFor(model => model[0].Telefone)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().Status)
+                @Html.DisplayNameFor(model => model[0].Status)
             </th>
             <th></th>
         </tr>
+        </thead>
+        <tbody>
         @foreach (var item in Model){
         <tr>
             <td>
@@ -59,7 +61,7 @@
             </td>
         </tr>
         }
-        </thead>
+        </tbody>
     </table>
 </div>
 </body>
