@@ -145,4 +145,9 @@ public class ContextDataFake : IContextData
     {
         throw new NotImplementedException();
     }
+
+    public void EmprestarLivro(EmprestimoLivro novoEmprestimo)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -13,6 +13,7 @@ public static class SqlManager
             TSql.PESQUISAR_LIVRO => "select convert(varchar(36), id) 'id', nome, autor, editora from Livros where id = @id",
             TSql.EXCLUIR_LIVRO => "delete from Livros where id = @id",
             TSql.ATUALIZAR_LIVRO => "update Livros set nome = @nome, autor = @autor, editora = @editora where id = @id",
+            TSql.EMPRESTAR_LIVRO => "insert into EmprestimoLivro (idLivro, idUsuario, dataEmprestimo, dataDevolucao) values (@idLivro,  @idUsuario, @dataEmprestimo, @dataDevolucao)",
             
             TSql.LISTAR_CLIENTES => "select convert(varchar(36), id) 'id', nome, cpf, email, telefone, idStatusCliente from Clientes",
             TSql.CADASTRAR_CLIENTE => "insert into Clientes (id, nome, cpf, email, telefone, idStatusCliente) values (convert(binary(36), @id) , @nome, @cpf, @email, @telefone, @idStatusCliente)",
@@ -28,6 +29,7 @@ public static class SqlManager
             TSql.EFETUAR_LOGIN => "select id, login, senha from Usuario where login = @login and senha = @senha",
             
             _ => throw new ArgumentOutOfRangeException(nameof(operacaoSql), operacaoSql, null)
+            
         };
 
         return sql;

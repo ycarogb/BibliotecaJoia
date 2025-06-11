@@ -35,4 +35,9 @@ public class LivroRepository : ILivroRepository
     {
         _context.ExcluirLivro(id);
     }
+
+    public void Emprestar(EmprestimoLivro novoEmprestimo)
+    {
+        _context.EmprestarLivro(novoEmprestimo);
+    }
 }

@@ -57,7 +57,9 @@
                     }
                     else if (Model.Cliente)
                     {
-                    @Html.ActionLink("Detalhes", "Details", new { id = item.Id })
+                        @Html.ActionLink("Detalhes", "Details", new { id = item.Id })
+                        @: |
+                        @Html.ActionLink("Emprestar", "Emprestar", new { id = item.Id })
                     }
                 </td>
             </tr>

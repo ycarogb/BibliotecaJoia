@@ -130,4 +130,43 @@ public class LivroController : Controller
             throw e;
         }
     }
+
+    public IActionResult Emprestar(string? id)
+    {
+        try
+        {
+            if (id == null)
+                return NotFound();
+
+            var livro = _livroService.ObterPorId(id);
+            if (livro == null)
+                return NotFound();
+        
+            return View(livro);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }   
+    }
+
+    [HttpPost]
+    public IActionResult Emprestar([Bind("Id, Nome, Autor, Editora")] LivroDto livro)
+    {
+        try
+        {
+            var idUsuario = User.Claims.First().Value;
+            if (idUsuario == null) 
+                throw new Exception("Usuário não encontrado. Procure a administração.");
+            
+            _livroService.Emprestar(livro, idUsuario);
+            return RedirectToAction("List");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

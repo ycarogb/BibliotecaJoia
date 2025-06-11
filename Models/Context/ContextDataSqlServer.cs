@@ -191,6 +191,30 @@ public class ContextDataSqlServer : IdentityDbContext<Usuario>, IContextData
                 _connection.Close(); //fecha conexão com o banco de dados
         }
     }
+    
+    public void EmprestarLivro(EmprestimoLivro novoEmprestimo)
+    {
+        try
+        {
+            _connection!.Open();
+            var query = SqlManager.GetSql(TSql.EMPRESTAR_LIVRO);
+            var command = new SqlCommand(query, _connection);
+            
+            command.Parameters.Add("@idLivro", SqlDbType.VarChar).Value = novoEmprestimo.LivroId;
+            command.Parameters.Add("@idUsuario", SqlDbType.VarChar).Value = novoEmprestimo.UsuarioId;
+            command.Parameters.Add("@dataEmprestimo", SqlDbType.Date).Value = novoEmprestimo.DataEmprestimo.ToString("yyyy-MM-dd");
+            command.Parameters.Add("@dataDevolucao", SqlDbType.Date).Value = novoEmprestimo.DataDevolucao.ToString("yyyy-MM-dd");
+            
+            command.ExecuteNonQuery();
+            
+            _connection.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 
     #endregion
 

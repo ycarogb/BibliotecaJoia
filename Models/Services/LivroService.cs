@@ -1,5 +1,6 @@
 using WebApp.Models.Dtos;
 using WebApp.Models.Entidades;
+using WebApp.Models.Enums;
 using WebApp.Models.Interfaces.Repositories;
 using WebApp.Models.Interfaces.Services;
 
@@ -85,5 +86,36 @@ public class LivroService : ILivroService
         {
             throw e;
         }
+    }
+
+    public void Emprestar(LivroDto livro, string usuarioId)
+    {
+        try
+        {
+            CriarNovoEmprestimo(livro, usuarioId);
+            AlterarStatusLivro(livro);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+    }
+
+    private void AlterarStatusLivro(LivroDto livro)
+    {
+        var objetoLivro = livro.ConverterParaEntidade();
+        objetoLivro.Status = StatusLivro.Emprestado;
+        _livroRepository.Atualizar(objetoLivro);
+    }
+
+    private void CriarNovoEmprestimo(LivroDto livro, string usuarioId)
+    {
+        var novoEmprestimo = new EmprestimoLivro()
+        {
+            UsuarioId = usuarioId,
+            LivroId = livro.Id
+        };
+            
+        _livroRepository.Emprestar(novoEmprestimo);
     }
 }

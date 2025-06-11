@@ -15,4 +15,5 @@ public interface IContextData
     Cliente ObterClientePorId(string id);
     void AtualizarCliente(Cliente Cliente);
     void ExcluirCliente(string id);
+    void EmprestarLivro(EmprestimoLivro novoEmprestimo);
 }

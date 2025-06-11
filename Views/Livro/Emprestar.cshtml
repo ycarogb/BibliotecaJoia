@@ -1,0 +1,38 @@
+@model WebApp.Models.Dtos.LivroDto
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Quer emprestar o seguinte Livro?</h2>
+<div>
+    <table class="table">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Nome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Autor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Autor)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Editora)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Editora)
+        </dd>
+    </table>
+</div>
+<div>
+    <form asp-action="Emprestar">
+        <input type="submit" value="Emprestar" class="btn-success"/> | 
+        <a asp-action="List">Voltar</a>
+    </form>
+    
+    <a asp-action="List">Voltar</a>
+</div>
