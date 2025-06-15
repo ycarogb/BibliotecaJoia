@@ -1,0 +1,51 @@
+@model WebApp.Models.ViewsModels.DevolucaoViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Quer devolver o seguinte Livro?</h2>
+<div>
+    <table class="table">
+        <dt>
+            @Html.DisplayNameFor(model => model.Livro.Nome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Livro.Nome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Livro.Autor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Livro.Autor)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Livro.Editora)
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => modelItem.Livro.Editora)
+        </dd>
+    </table>
+</div>
+
+<!-- Formulário que envia o LivroDto via POST -->
+<div>
+    @if (Model.LivroParaDevolucao)
+    {
+        <form asp-action="Devolver" method="post" style="display: inline;">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" name="Id" value="@Model.Livro.Id" />
+            <input type="hidden" name="Nome" value="@Model.Livro.Nome" />
+            <input type="hidden" name="Autor" value="@Model.Livro.Autor" />
+            <input type="hidden" name="Editora" value="@Model.Livro.Editora" />
+
+            <input type="submit" value="Devolver" class="btn btn-success" />
+        </form>
+    }
+
+    <a asp-action="List" class="btn btn-secondary">Voltar</a>
+</div>
+
+

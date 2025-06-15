@@ -24,9 +24,12 @@ public class LivroController : Controller
         try
         {
             var livros = _livroService.Listar();
+            var idUsuario = User.Claims.First().Value;
+            var livrosEmprestadosPeloUsuario = _livroService.ListarLivrosEmprestados(idUsuario);
             var viewModel = new ListagemLivroViewModel()
             {
                 Livros = livros,
+                LivrosEmprestados = livrosEmprestadosPeloUsuario,
                 Administrador = User.IsInRole("Administrador"),
                 Cliente = User.IsInRole("Cliente")
             };
@@ -48,7 +51,7 @@ public class LivroController : Controller
 
         return View(livro);
     }
-    
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Edit([Bind("Nome, Autor, Editora, Id")] LivroDto livro)
@@ -85,7 +88,7 @@ public class LivroController : Controller
         var livro = _livroService.ObterPorId(id);
         if (livro == null)
             return NotFound();
-        
+
         return View(livro);
     }
 
@@ -99,12 +102,12 @@ public class LivroController : Controller
         {
             Console.WriteLine(e);
             throw;
-        }   
+        }
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Create([Bind("Nome, Autor, Editora")]LivroDto livro)
+    public IActionResult Create([Bind("Nome, Autor, Editora")] LivroDto livro)
     {
         try
         {
@@ -141,26 +144,73 @@ public class LivroController : Controller
             var livro = _livroService.ObterPorId(id);
             if (livro == null)
                 return NotFound();
-        
+
             return View(livro);
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             throw;
-        }   
+        }
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult Emprestar([Bind("Id, Nome, Autor, Editora")] LivroDto livro)
     {
         try
         {
             var idUsuario = User.Claims.First().Value;
-            if (idUsuario == null) 
+            if (idUsuario == null)
                 throw new Exception("Usuário não encontrado. Procure a administração.");
-            
+
             _livroService.Emprestar(livro, idUsuario);
+            return RedirectToAction("List");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public IActionResult Devolver(string id)
+    {
+        try
+        {
+            if (id == null)
+                return NotFound();
+
+            var livro = _livroService.ObterPorId(id);
+            if (livro == null)
+                return NotFound();
+            var livrosEmprestadosPeloUsuario = _livroService.ListarLivrosEmprestados(User.Claims.First().Value);
+
+            var devolucaoViewModel = new DevolucaoViewModel
+            {
+                Livro = livro,
+                LivroParaDevolucao = livrosEmprestadosPeloUsuario.Exists(p => p.Id == id)
+            };
+
+            return View(devolucaoViewModel);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    [HttpPost]
+    public IActionResult Devolver([Bind("Id, Nome, Autor, Editora")] LivroDto livro)
+    {
+        try
+        {
+            var idUsuario = User.Claims.First().Value;
+            if (idUsuario == null)
+                throw new Exception("Usuário não encontrado. Procure a administração.");
+
+            _livroService.Devolver(livro, idUsuario);
             return RedirectToAction("List");
         }
         catch (Exception e)

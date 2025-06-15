@@ -19,7 +19,16 @@
         <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model[0].Login)
+                @Html.DisplayNameFor(model => model[0].Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Cpf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Telefone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Email)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model[0].Senha)
@@ -31,7 +40,16 @@
         @foreach (var item in Model){
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Login)
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cpf)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Senha)

@@ -7,6 +7,10 @@ public class UsuarioDto
     public string Id { get; set; }
     public string Login { get; set; }
     public string Senha { get; set; }
+    public string Nome { get; set; }
+    public string Telefone { get; set; }
+    public string Cpf { get; set; }
+    public string Email { get; set; }
 
     public Usuario ConverterParaEntidade()
     {
@@ -15,7 +19,10 @@ public class UsuarioDto
             Id = Id,
             Login = Login,
             Senha = Senha,
-            Email = Login
+            Nome = Nome,
+            Telefone = Telefone,
+            Cpf = Cpf,
+            Email = Email
         };
 
         return result;

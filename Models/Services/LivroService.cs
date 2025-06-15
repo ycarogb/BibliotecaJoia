@@ -48,7 +48,42 @@ public class LivroService : ILivroService
             throw e;
         }
     }
+    
+    public List<LivroDto> ListarLivrosEmprestados(string? identityName)
+    {
+        try
+        {
+            if (identityName == null) 
+                throw new Exception("Usuário não encontrado. Procure a Administração!");
+            var objetoslivros = _livroRepository.ListarEmprestados(identityName);
+            var livros = new List<LivroDto>();
+            foreach (var livro in objetoslivros)
+            {
+                var novoLivro = livro.ConverterParaDto();
+                livros.Add(novoLivro);
+            }
 
+            return livros;
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+    }
+
+    public void Devolver(LivroDto livro, string idUsuario)
+    {
+        try
+        {
+            InserirDataDevolucao(livro, idUsuario);
+            AlterarStatusLivro(livro, devolucao: true);
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+    }
+    
     public LivroDto ObterPorId(string Id)
     {
         try
@@ -88,11 +123,11 @@ public class LivroService : ILivroService
         }
     }
 
-    public void Emprestar(LivroDto livro, string usuarioId)
+    public void Emprestar(LivroDto livro, string idUsuario)
     {
         try
         {
-            CriarNovoEmprestimo(livro, usuarioId);
+            CriarNovoEmprestimo(livro, idUsuario);
             AlterarStatusLivro(livro);
         }
         catch (Exception e)
@@ -101,21 +136,28 @@ public class LivroService : ILivroService
         }
     }
 
-    private void AlterarStatusLivro(LivroDto livro)
+    private void AlterarStatusLivro(LivroDto livro, bool devolucao = false)
     {
         var objetoLivro = livro.ConverterParaEntidade();
-        objetoLivro.Status = StatusLivro.Emprestado;
+        objetoLivro.Status = devolucao ? StatusLivro.Disponivel : StatusLivro.Emprestado;
         _livroRepository.Atualizar(objetoLivro);
     }
 
-    private void CriarNovoEmprestimo(LivroDto livro, string usuarioId)
+    private void CriarNovoEmprestimo(LivroDto livro, string idUsuario)
     {
         var novoEmprestimo = new EmprestimoLivro()
         {
-            UsuarioId = usuarioId,
+            UsuarioId = idUsuario,
             LivroId = livro.Id
         };
             
         _livroRepository.Emprestar(novoEmprestimo);
+    }
+    
+    private void InserirDataDevolucao(LivroDto livro, string idUsuario)
+    {
+        var emprestimoLivro = _livroRepository.ObterEmprestimoLivro(livro.Id, idUsuario);
+        
+        _livroRepository.InserirDataDevolucaoEmprestimo(emprestimoLivro);
     }
 }

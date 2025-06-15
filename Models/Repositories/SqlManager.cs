@@ -8,12 +8,16 @@ public static class SqlManager
     {
         var sql = operacaoSql switch
         {
-            TSql.LISTAR_LIVROS => "select convert(varchar(36), id) 'id', nome, autor, editora from Livros order by nome",
+            TSql.LISTAR_LIVROS => "select convert(varchar(36), id) 'id', nome, autor, editora, idStatusLivro from Livros order by nome",
             TSql.CADASTRAR_LIVRO => "insert into Livros (id, nome, autor, editora, idStatusLivro) values (convert(binary(36), @id) , @nome, @autor, @editora, @idStatusLivro)",
             TSql.PESQUISAR_LIVRO => "select convert(varchar(36), id) 'id', nome, autor, editora from Livros where id = @id",
             TSql.EXCLUIR_LIVRO => "delete from Livros where id = @id",
-            TSql.ATUALIZAR_LIVRO => "update Livros set nome = @nome, autor = @autor, editora = @editora where id = @id",
+            TSql.ATUALIZAR_LIVRO => "update Livros set nome = @nome, autor = @autor, editora = @editora, idStatusLivro = @idStatusLivro where id = @id",
+            
             TSql.EMPRESTAR_LIVRO => "insert into EmprestimoLivro (idLivro, idUsuario, dataEmprestimo, dataDevolucao) values (@idLivro,  @idUsuario, @dataEmprestimo, @dataDevolucao)",
+            TSql.LISTAR_LIVROS_EMPRESTADOS => "select convert(varchar(36), id) 'id', nome, autor, editora, idStatusLivro from Livros l join EmprestimoLivro el on l.id = el.idLivro where el.idUsuario = @idUsuario order by nome ",
+            TSql.PESQUISAR_EMPRESTIMO => "select idEmprestimo, idLivro, idUsuario, dataEmprestimo, dataDevolucao from EmprestimoLivro where idLivro = @idLivro and idUsuario = @idUsuario",
+            TSql.ATUALIZAR_EMPRESTIMO => "update EmprestimoLivro set idLivro = @idLivro, idUsuario = @idUsuario, dataEmprestimo = @dataEmprestimo, dataDevolucao = @dataDevolucao, dataDevolucaoEfetiva = @dataDevolucaoEfetiva where idEmprestimo = @idEmprestimo",
             
             TSql.LISTAR_CLIENTES => "select convert(varchar(36), id) 'id', nome, cpf, email, telefone, idStatusCliente from Clientes",
             TSql.CADASTRAR_CLIENTE => "insert into Clientes (id, nome, cpf, email, telefone, idStatusCliente) values (convert(binary(36), @id) , @nome, @cpf, @email, @telefone, @idStatusCliente)",

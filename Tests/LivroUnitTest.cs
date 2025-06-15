@@ -16,7 +16,7 @@ public class LivroUnitTest
             Autor = "AutorTeste",
             Editora = "EditoraTeste",
             Nome = "LivroTeste",
-            Status = StatusLivro.Disponível
+            Status = StatusLivro.Disponivel
         };
 
         var resultado = livro.ConverterParaDto();

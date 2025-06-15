@@ -12,7 +12,6 @@ public class LivroRepository : ILivroRepository
     }
     public void Cadastrar(Livro livro)
     {
-        //TODO: VALIDAR DADOS DO INPUT
         _context.CadastrarLivro(livro);
     }
 
@@ -39,5 +38,20 @@ public class LivroRepository : ILivroRepository
     public void Emprestar(EmprestimoLivro novoEmprestimo)
     {
         _context.EmprestarLivro(novoEmprestimo);
+    }
+
+    public List<Livro> ListarEmprestados(string idUsuario)
+    {
+        return _context.ListarLivrosEmprestados(idUsuario);
+    }
+
+    public void InserirDataDevolucaoEmprestimo(EmprestimoLivro emprestimoAtualizado)
+    {
+        _context.InserirDataDevolucaoEfetivaEmprestimo(emprestimoAtualizado);
+    }
+
+    public EmprestimoLivro ObterEmprestimoLivro(string livroId, string idUsuario)
+    {
+        return _context.ObterEmprestimoLivro(livroId, idUsuario);
     }
 }

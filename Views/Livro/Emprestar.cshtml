@@ -1,7 +1,7 @@
 @model WebApp.Models.Dtos.LivroDto
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Emprestar Livro";
     Layout = "_Layout";
 }
 
@@ -28,11 +28,17 @@
         </dd>
     </table>
 </div>
-<div>
-    <form asp-action="Emprestar">
-        <input type="submit" value="Emprestar" class="btn-success"/> | 
-        <a asp-action="List">Voltar</a>
-    </form>
-    
+
+<!-- Formulário que envia o LivroDto via POST -->
+<form asp-action="Emprestar" method="post">
+    @Html.AntiForgeryToken()
+
+    @* Campos ocultos que serão postados *@
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="hidden" name="Nome" value="@Model.Nome" />
+    <input type="hidden" name="Autor" value="@Model.Autor" />
+    <input type="hidden" name="Editora" value="@Model.Editora" />
+
+    <input type="submit" value="Emprestar" class="btn btn-success" /> |
     <a asp-action="List">Voltar</a>
-</div>
+</form>

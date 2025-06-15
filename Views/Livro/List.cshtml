@@ -1,3 +1,4 @@
+@using WebApp.Models.Enums
 @model WebApp.Models.ViewsModels.ListagemLivroViewModel
 
 @{
@@ -30,6 +31,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.Livros[0].Editora)
             </th>
+            <th>
+                Ações
+            </th>
+            @if (Model.Administrador)
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Livros[0].StatusLivro)
+                </th>
+            }
             <th></th>
         </tr>
         </thead>
@@ -59,9 +69,32 @@
                     {
                         @Html.ActionLink("Detalhes", "Details", new { id = item.Id })
                         @: |
-                        @Html.ActionLink("Emprestar", "Emprestar", new { id = item.Id })
+                        if (item.StatusLivro == StatusLivro.Emprestado && Model.LivrosEmprestados.Exists(p => p.Id == item.Id))
+                        {
+                            <span style="background-color: #f8d7da; color: #721c24; padding: 5px; border: 1px solid #f5c6cb; border-radius: 5px; margin-bottom: 10px;">
+                                <strong>Emprestado</strong> 
+                            </span>
+                            @: |
+                            @Html.ActionLink("Devolver", "Devolver", new { id = item.Id })
+                        }
+                        else if (item.StatusLivro == StatusLivro.Emprestado)
+                        {
+                            <span style="background-color: #f8d7da; color: #721c24; padding: 5px; border: 1px solid #f5c6cb; border-radius: 5px; margin-bottom: 10px;">
+                                <strong>Emprestado</strong> 
+                            </span>
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Emprestar", "Emprestar", new { id = item.Id })   
+                        }
                     }
                 </td>
+                @if (Model.Administrador)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StatusLivro)
+                    </td>
+                }
             </tr>
         }
         </tbody>

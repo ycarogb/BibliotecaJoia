@@ -9,6 +9,7 @@ public class LivroDto : EntidadeBase
     public string Autor { get; set; }
     public string Editora { get; set; }
     public int IdStatusLivro { get; set; }
+    public StatusLivro StatusLivro { get => (StatusLivro)IdStatusLivro; }
 
     //Construtor criado para evitar conflitos na construção do formulário
     public LivroDto()
@@ -24,7 +25,7 @@ public class LivroDto : EntidadeBase
             Nome = Nome,
             Autor = Autor,
             Editora = Editora,
-            Status = (StatusLivro)IdStatusLivro
+            Status = StatusLivro
         };
     }
 }

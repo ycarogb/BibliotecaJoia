@@ -121,6 +121,16 @@ public class ContextDataFake : IContextData
         }
     }
 
+    public List<Livro> ListarLivrosEmprestados(string idUsuario)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void DevolverLivro(EmprestimoLivro emprestimoAtualizado)
+    {
+        throw new NotImplementedException();
+    }
+
     public void CadastrarCliente(Cliente Cliente)
     {
         throw new NotImplementedException();
@@ -142,6 +152,16 @@ public class ContextDataFake : IContextData
     }
 
     public void ExcluirCliente(string id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public EmprestimoLivro ObterEmprestimoLivro(string idLivro, string idUsuario)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void InserirDataDevolucaoEfetivaEmprestimo(EmprestimoLivro emprestimoAtualizado)
     {
         throw new NotImplementedException();
     }
