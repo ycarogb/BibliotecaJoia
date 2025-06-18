@@ -8,11 +8,35 @@
     <span id="alert-message"></span>
 </div>
 
-<form id="formEdit" asp-action="Edit" method="post">
+<form id="formEdit" asp-action="Edit" method="post" class="form-container">
     <input type="hidden" name="Id" value="@Model.Id" />
-    <input type="text" name="Login" value="@Model.Login" placeholder="Login" required />
-    <input type="password" name="Senha" placeholder="Senha" required />
-    <button type="submit">Salvar</button>
+
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="text" name="Email" value="@Model.Email" placeholder="Email" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Senha">Senha</label>
+        <input type="password" name="Senha" value="@Model.Senha" placeholder="Senha" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Nome">Nome</label>
+        <input type="text" name="Nome" value="@Model.Nome" placeholder="Nome" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Telefone">Telefone</label>
+        <input type="text" name="Telefone" value="@Model.Telefone" placeholder="Telefone" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Cpf">CPF</label>
+        <input type="text" name="Cpf" value="@Model.Cpf" placeholder="CPF" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
 </form>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -29,7 +53,6 @@
                     if (response.success) {
                         window.location.href = '/Usuario/List'; // Redireciona para a lista de usuários
                     } else {
-                        // Exibe o balão de alerta com a mensagem de erro
                         $('#alert-message').text(response.message);
                         $('#alert').show();
                     }
@@ -44,6 +67,42 @@
 </script>
 
 <style>
+    .form-container {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group input {
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .form-group label {
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
     .alert {
         padding: 15px;
         border-radius: 5px;

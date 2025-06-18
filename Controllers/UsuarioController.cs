@@ -44,7 +44,7 @@ public class UsuarioController: Controller
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit([Bind("Id, Login, Senha")] UsuarioDto usuario)
+    public async Task<IActionResult> Edit([Bind("Id, Nome, Cpf, Email, Telefone, Login, Senha")] UsuarioDto usuario)
     {
         if (usuario.Id == null)
             return NotFound();
@@ -111,13 +111,10 @@ public class UsuarioController: Controller
 
     [HttpPost]
     [AllowAnonymous]
-    public async Task<IActionResult> Registrar(string email, string senha, bool isAdmin)
+    public async Task<IActionResult> Registrar(UsuarioDto novoUsuario)
     {
-        if (!ModelState.IsValid)
-            return View();
-
-        var resultado = await _usuarioService.CadastrarAsync(email, senha, isAdmin);
-        return resultado; 
+        await _usuarioService.CadastrarAsync(novoUsuario);
+        return RedirectToAction("Index", "Home");
     }
     
     private JsonResult? VerificarErrosNaSenha(string senha)

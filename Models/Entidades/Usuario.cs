@@ -7,7 +7,8 @@ public class Usuario : IdentityUser
 {
     public Usuario()
     {
-        Email = Login;
+        UserName = Email;
+        Login = Email;
     }
 
     public string Login { get; set; }
@@ -23,8 +24,13 @@ public class Usuario : IdentityUser
         var result = new UsuarioDto()
         {
             Id = Id,
-            Login = Login,
-            Senha = Senha
+            Login = Email,
+            Senha = Senha,
+            Nome = Nome,
+            Telefone = Telefone,
+            Cpf = Cpf,
+            Email = Email,
+            IsAdmin = UserType == "Administrador"
         };
 
         return result;

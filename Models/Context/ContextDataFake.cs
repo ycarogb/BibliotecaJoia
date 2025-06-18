@@ -130,32 +130,7 @@ public class ContextDataFake : IContextData
     {
         throw new NotImplementedException();
     }
-
-    public void CadastrarCliente(Cliente Cliente)
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<Cliente> ListarCliente()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Cliente ObterClientePorId(string id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void AtualizarCliente(Cliente Cliente)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void ExcluirCliente(string id)
-    {
-        throw new NotImplementedException();
-    }
-
+    
     public EmprestimoLivro ObterEmprestimoLivro(string idLivro, string idUsuario)
     {
         throw new NotImplementedException();

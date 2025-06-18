@@ -14,11 +14,11 @@ public class UsuarioService : IUsuarioService
         _usuarioRepository = usuarioRepository;
     }
 
-    public async Task<JsonResult> CadastrarAsync(string email, string senha, bool isAdmin)
+    public async Task<JsonResult> CadastrarAsync(UsuarioDto novoUsuario)
     {
         try
         {
-            var result = await _usuarioRepository.CadastrarAsync(email, senha, isAdmin);
+            var result = await _usuarioRepository.CadastrarAsync(novoUsuario);
             return result;
         }
         catch (Exception e)
@@ -66,8 +66,14 @@ public class UsuarioService : IUsuarioService
     {
         try
         {
-            var usuario = usuarioDto.ConverterParaEntidade();
-            await _usuarioRepository.AtualizarAsync(usuario);
+            var usuarioNoBanco = _usuarioRepository.ObterPorEmail(usuarioDto.Email);
+            usuarioNoBanco.Nome = usuarioDto.Nome;
+            usuarioNoBanco.Telefone = usuarioDto.Telefone;
+            usuarioNoBanco.Cpf = usuarioDto.Cpf;
+            usuarioNoBanco.Email = usuarioDto.Email;
+            usuarioNoBanco.Login = usuarioDto.Email;
+            usuarioNoBanco.Senha = usuarioDto.Senha;
+            await _usuarioRepository.AtualizarAsync(usuarioNoBanco);
         }
         catch (Exception e)
         {

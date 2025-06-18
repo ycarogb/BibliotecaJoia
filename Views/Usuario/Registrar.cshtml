@@ -6,42 +6,85 @@
     <span id="alert-message"></span>
 </div>
 
-<form id="formRegistrar" asp-action="Registrar" method="post">
-    <input type="email" name="email" placeholder="Email" required />
-    <input type="password" name="senha" placeholder="Senha" required />
-    <label> <input type="checkbox" name="isAdmin" value="true" /> Cadastrar como Administrador </label>
-    <button type="submit">Registrar</button>
+<form id="formRegistrar" asp-action="Registrar" method="post" class="form-container">
+    <div class="form-group">
+        <label for="nome">Nome completo</label>
+        <input type="text" id="nome" name="Nome" required />
+    </div>
+    
+    <div class="form-group">
+        <label for="telefone">Telefone</label>
+        <input type="text" id="telefone" name="Telefone" required />
+    </div>
+    
+    <div class="form-group">
+        <label for="cpf">CPF</label>
+        <input type="text" id="cpf" name="Cpf" required />
+    </div>
+    
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="Email" required />
+    </div>
+    
+    <div class="form-group">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="Senha" required />
+    </div>
+    
+    <div class="form-group checkbox">
+        <label><input type="checkbox" name="IsAdmin" value="true" /> Cadastrar como Administrador</label>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Registrar" class="btn btn-primary"/>
+    </div>
 </form>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#formRegistrar').submit(function (event) {
-            event.preventDefault(); // Impede o envio padrão do formulário
-
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
-                success: function (response) {
-                    if (response.success) {
-                        window.location.href = '/Home/Index'; // Redireciona para a página inicial
-                    } else {
-                        // Exibe o balão de alerta com a mensagem de erro
-                        $('#alert-message').text(response.message);
-                        $('#alert').show();
-                    }
-                },
-                error: function () {
-                    $('#alert-message').text('Ocorreu um erro ao processar sua solicitação.');
-                    $('#alert').show();
-                }
-            });
-        });
-    });
-</script>
-
 <style>
+    .form-container {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="password"] {
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .form-group label {
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-group.checkbox {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
     .alert {
         padding: 15px;
         border-radius: 5px;

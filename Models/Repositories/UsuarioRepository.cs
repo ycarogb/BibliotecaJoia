@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Models.Dtos;
 using WebApp.Models.Entidades;
 using WebApp.Models.Interfaces.Repositories;
 
@@ -16,25 +17,17 @@ public class UsuarioRepository : IUsuarioRepository
         _signInManager = signInManager;
     }
 
-    public async Task<JsonResult> CadastrarAsync(string email, string senha, bool isAdmin)
+    public async Task<JsonResult> CadastrarAsync(UsuarioDto novoUsuario)
     {
-        var erroSenha = VerificarErrosNaSenha(senha);
+        var erroSenha = VerificarErrosNaSenha(novoUsuario.Senha);
         if (erroSenha != null) return erroSenha;
-        var role = isAdmin ? "Administrador" : "Cliente";
-        var novoUsuario = new Usuario
-        {
-            UserName = email,
-            Email = email,
-            Login = email,
-            Senha = senha,
-            UserType = role
-        };
+        var novoUsuarioEntidade = novoUsuario.ConverterParaEntidade();
         
-        var resultado = await _userManager.CreateAsync(novoUsuario, senha);
+        var resultado = await _userManager.CreateAsync(novoUsuarioEntidade, novoUsuarioEntidade.Senha);
         if (resultado.Succeeded)
         {
-            await _userManager.AddToRoleAsync(novoUsuario, role);
-            await _signInManager.SignInAsync(novoUsuario, isPersistent: false);
+            await _userManager.AddToRoleAsync(novoUsuarioEntidade, novoUsuarioEntidade.UserType);
+            await _signInManager.SignInAsync(novoUsuarioEntidade, isPersistent: false);
             return new JsonResult(new { success = true });
         }
         foreach (var erro in resultado.Errors)
@@ -60,9 +53,7 @@ public class UsuarioRepository : IUsuarioRepository
     {
         try
         {
-            var usuarioEditado = await _userManager.FindByEmailAsync(usuario.Email);
-            usuarioEditado.Senha = usuario.Senha;
-            await _userManager.UpdateAsync(usuarioEditado);
+            await _userManager.UpdateAsync(usuario);
         }
         catch (Exception e)
         {
@@ -76,7 +67,13 @@ public class UsuarioRepository : IUsuarioRepository
         var usuario = ObterPorId(id);
         await _userManager.DeleteAsync(usuario);
     }
-    
+
+    public Usuario ObterPorEmail(string emailUsuario)
+    {
+        var result = _userManager.Users.First(p => p.Email == emailUsuario);
+        return result;
+    }
+
     private JsonResult? VerificarErrosNaSenha(string senha)
     {
         var temLetraMaiuscula = senha.Any(char.IsUpper);
