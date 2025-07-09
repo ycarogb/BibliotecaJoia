@@ -71,8 +71,6 @@ Feito de ❤️ por Ycaro Batalha
 
 [![Linkedin Badge](https://img.shields.io/badge/-Ycaro-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/ycaro-gabriel-da-costa-batalha-2019/)](https://www.linkedin.com/in/ycaro-gabriel-da-costa-batalha-2019/) 
 
-Licenciado sob a [MIT License](LICENSE).
-
 ---
 
 ## 🌟 Sugestões de melhorias (versões futuras)
